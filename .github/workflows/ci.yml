@@ -1,0 +1,64 @@
+name: CI
+
+on:
+  push:
+    branches: ['**']
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  build-and-test:
+    name: build-and-test
+    runs-on: windows-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: global.json
+
+      - name: Restore
+        run: dotnet restore Frontend-interfaz-Multimodal-HMI.slnx
+
+      - name: Estilo (dotnet format)
+        run: dotnet format Frontend-interfaz-Multimodal-HMI.slnx --verify-no-changes --severity warn --no-restore
+
+      - name: Build (analizadores de estilo como errores)
+        run: dotnet build Frontend-interfaz-Multimodal-HMI.slnx -c Release --no-restore
+
+      - name: Pruebas + cobertura (umbral definido en el .csproj de pruebas)
+        run: >
+          dotnet test Frontend-interfaz-Multimodal-HMI.slnx -c Release --no-restore
+          -p:CollectCoverage=true
+          -p:CoverletOutputFormat=cobertura
+          -p:CoverletOutput="${{ github.workspace }}/coverage/"
+
+      - name: Resumen de cobertura
+        if: ${{ !cancelled() && hashFiles('coverage/coverage.cobertura.xml') != '' }}
+        uses: danielpalme/ReportGenerator-GitHub-Action@5
+        with:
+          reports: coverage/coverage.cobertura.xml
+          targetdir: coverage-report
+          reporttypes: MarkdownSummaryGithub;Html
+
+      - name: Publicar resumen en el job
+        if: ${{ !cancelled() && hashFiles('coverage-report/SummaryGithub.md') != '' }}
+        shell: bash
+        run: cat coverage-report/SummaryGithub.md >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Subir reporte de cobertura
+        if: ${{ !cancelled() && hashFiles('coverage-report/**') != '' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: coverage-report

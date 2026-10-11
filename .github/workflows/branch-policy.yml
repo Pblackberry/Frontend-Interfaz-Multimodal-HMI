@@ -1,0 +1,28 @@
+name: Branch policy
+
+on:
+  pull_request:
+    branches: [develop, main]
+
+permissions:
+  contents: read
+
+jobs:
+  branch-policy:
+    name: branch-policy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Validar flujo de ramas
+        env:
+          BASE: ${{ github.base_ref }}
+          HEAD: ${{ github.head_ref }}
+        run: |
+          if [ "$BASE" = "main" ] && [ "$HEAD" != "develop" ]; then
+            echo "::error::A main solo se llega desde develop (rama origen: $HEAD)."
+            exit 1
+          fi
+          if [ "$BASE" = "develop" ] && ! [[ "$HEAD" =~ ^(feat|fix|chore|docs|refactor)/ ]]; then
+            echo "::error::Las ramas hacia develop deben llamarse feat/*, fix/*, chore/*, docs/* o refactor/* (rama origen: $HEAD)."
+            exit 1
+          fi
+          echo "OK: $HEAD -> $BASE"
