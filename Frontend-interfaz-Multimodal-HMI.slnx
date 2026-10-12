@@ -1,3 +1,4 @@
 <Solution>
   <Project Path="Frontend-interfaz-Multimodal-HMI/Frontend-interfaz-Multimodal-HMI.csproj" />
+  <Project Path="FrontEnd.InterfazHMI.Tests/FrontEnd.InterfazHMI.Tests.csproj" Id="b759eb86-5728-47ac-8d3c-277a5434b536" />
 </Solution>
