@@ -1,13 +1,32 @@
 <Window x:Class="Frontend_interfaz_Multimodal_HMI.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Frontend_interfaz_Multimodal_HMI"
-        mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        
+        Title="Rony" Width="540" Height="960"
+        ResizeMode="CanMinimize" Background="Black"
+        UseLayoutRounding="True" SnapsToDevicePixels="True"
+        FontFamily="Inter, Segoe UI">
 
+  <!-- Atajo SOLO para desarrollo: Esc vuelve a la pantalla de inicio -->
+  <Window.InputBindings>
+    <KeyBinding Key="Escape" Command="{Binding GoHomeCommand}"/>
+  </Window.InputBindings>
+
+  <!-- El Viewbox escala el diseño de 540x960 a cualquier resolución vertical
+         (p. ej. 1080x1920 en producción) sin tocar las vistas. -->
+  <Viewbox Stretch="Uniform">
+    <Grid Width="540" Height="960" ClipToBounds="True" Background="Black">
+      <ContentControl Content="{Binding Navigation.Current, NotifyOnTargetUpdated=True}">
+        <ContentControl.Triggers>
+          <EventTrigger RoutedEvent="Binding.TargetUpdated">
+            <BeginStoryboard>
+              <Storyboard>
+                <DoubleAnimation Storyboard.TargetProperty="Opacity"
+                                                 From="0" To="1" Duration="0:0:0.3"/>
+              </Storyboard>
+            </BeginStoryboard>
+          </EventTrigger>
+        </ContentControl.Triggers>
+      </ContentControl>
     </Grid>
+  </Viewbox>
 </Window>

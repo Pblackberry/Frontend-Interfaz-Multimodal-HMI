@@ -7,9 +7,5 @@ namespace Frontend_interfaz_Multimodal_HMI;
 /// </summary>
 public partial class MainWindow : Window
 {
-    public MainWindow()
-    {
-        //Test change
-        InitializeComponent();
-    }
+    public MainWindow() => InitializeComponent();
 }

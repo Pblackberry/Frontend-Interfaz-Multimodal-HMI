@@ -17,7 +17,7 @@ trim_trailing_whitespace = false
 # Orden y usings
 dotnet_sort_system_directives_first = true
 csharp_using_directive_placement = outside_namespace:warning
-dotnet_diagnostic.IDE0005.severity = warning
+dotnet_diagnostic.IDE0005.severity = none
 
 # Estructura
 csharp_style_namespace_declarations = file_scoped:warning
