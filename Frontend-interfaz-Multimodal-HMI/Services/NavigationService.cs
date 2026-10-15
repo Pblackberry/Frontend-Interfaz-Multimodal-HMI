@@ -2,8 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using CommunityToolkit.Mvvm.ComponentModel;
-using Microsoft.Extensions.DependencyInjection;
 using Frontend_interfaz_Multimodal_HMI.ViewModels;
+using Microsoft.Extensions.DependencyInjection;
 namespace Frontend_interfaz_Multimodal_HMI.Services;
 
 public partial class NavigationService : ObservableObject, INavigationService

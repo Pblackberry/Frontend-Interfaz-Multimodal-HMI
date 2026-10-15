@@ -6,6 +6,7 @@ using Frontend_interfaz_Multimodal_HMI.ViewModels;
 using NSubstitute;
 
 namespace FrontEnd.InterfazHMI.Tests.Unit.Services;
+
 public class NavigationServiceTests
 {
     private readonly IServiceProvider _serviceProvider = Substitute.For<IServiceProvider>();
