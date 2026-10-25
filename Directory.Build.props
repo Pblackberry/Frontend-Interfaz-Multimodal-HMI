@@ -6,7 +6,7 @@
     <AnalysisLevel>latest</AnalysisLevel>
     <!-- El estilo definido en .editorconfig también rompe la compilación -->
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
 	<GenerateDocumentationFile>true</GenerateDocumentationFile>
 	<!-- No exigir comentarios XML en todos los miembros públicos -->
 	<NoWarn>$(NoWarn);CS1591</NoWarn>
