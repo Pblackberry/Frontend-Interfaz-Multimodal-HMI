@@ -23,7 +23,7 @@ public partial class NavigationService : ObservableObject, INavigationService
         switch (screen.ToLowerInvariant())
         {
             case "welcome": NavigateTo<WelcomeViewModel>(); break;
-            //case "menu": NavigateTo<MenuViewModel>(); break;
+            case "menu": NavigateTo<MenuViewModel>(); break;
             default:
                 System.Diagnostics.Debug.WriteLine($"Pantalla desconocida: {screen}");
                 break;
