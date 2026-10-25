@@ -1,9 +1,9 @@
 using System.Net.WebSockets;
 using System.Text;
 using System.Threading.Channels;
+using FrontEnd.InterfazHMI.Tests.Support;
 using Frontend_interfaz_Multimodal_HMI.Models;
 using Frontend_interfaz_Multimodal_HMI.Services;
-using FrontEnd.InterfazHMI.Tests.Support;
 
 namespace FrontEnd.InterfazHMI.Tests.Integration.Services;
 
@@ -40,7 +40,9 @@ public class WsClientIntegrationTests
         {
             _cts.Cancel();
             if (_run is not null)
+            {
                 await _run.WaitAsync(Timeout);
+            }
         }
 
         public async ValueTask DisposeAsync()
@@ -143,7 +145,7 @@ public class WsClientIntegrationTests
         await FakeWsServer.SendTextAsync(socket, UpdateJson("f1", "Mojito"));
         var payload = await run.NextUpdateAsync();
 
-        Assert.Equal("f1", payload.UltimaActualizacion);   
+        Assert.Equal("f1", payload.UltimaActualizacion);
     }
 
     [Fact]
@@ -162,7 +164,7 @@ public class WsClientIntegrationTests
     }
 
     [Theory]
-    [InlineData("{\"id\":\"1\",\"ts\":\"2026-10-22T10:00:00Z\",\"type\":\"catalog_update\"}")]  
+    [InlineData("{\"id\":\"1\",\"ts\":\"2026-10-22T10:00:00Z\",\"type\":\"catalog_update\"}")]
     [InlineData("{\"id\":\"1\",\"ts\":\"2026-10-22T10:00:00Z\",\"type\":\"catalog_update\",\"payload\":{\"ultima_actualizacion\":{}}}")]
     public async Task CatalogUpdateWithAnInvalidPayload_IsIgnored_AndTheConnectionKeepsWorking(string badMessage)
     {
@@ -205,7 +207,7 @@ public class WsClientIntegrationTests
         var first = await server.AcceptAsync();
 
         await first.CloseOutputAsync(WebSocketCloseStatus.NormalClosure, "bye", CancellationToken.None);
-        var second = await server.AcceptAsync();   
+        var second = await server.AcceptAsync();
         await FakeWsServer.SendTextAsync(second, UpdateJson("f1", "Mojito"));
         var payload = await run.NextUpdateAsync();
 
@@ -219,7 +221,7 @@ public class WsClientIntegrationTests
         var port = FakeWsServer.GetFreePort();
         await using var run = new ClientRun(new Uri($"ws://127.0.0.1:{port}/ws"));
         run.Start();
-        await Task.Delay(500);   
+        await Task.Delay(500);
 
         await using var server = new FakeWsServer(port);
         var socket = await server.AcceptAsync();

@@ -2,8 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
-using System.Windows;
 using System.Text;
+using System.Windows;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
@@ -19,7 +19,7 @@ public partial class MenuViewModel : ObservableRecipient, IRecipient<CatalogChan
     public MenuViewModel(CatalogStore store)
     {
         Load(store.Items);
-        IsActive = true; 
+        IsActive = true;
     }
 
     public void Receive(CatalogChangedMessage message)
@@ -29,13 +29,18 @@ public partial class MenuViewModel : ObservableRecipient, IRecipient<CatalogChan
     {
         Items.Clear();
         foreach (var item in items)
+        {
             Items.Add(new DrinkCardViewModel(item));
+        }
     }
 
     [RelayCommand]
     private void SelectDrink(DrinkCardViewModel? drink)
     {
-        if (drink is null) return;
+        if (drink is null)
+        {
+            return;
+        }
         // TODO: flujo de pedido (confirmar, enviar al backend, etc.)
         Debug.WriteLine($"[Menu] Bebida seleccionada: {drink.Name}");
     }

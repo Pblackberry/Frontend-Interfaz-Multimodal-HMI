@@ -1,8 +1,8 @@
+using System.Threading.Channels;
 using CommunityToolkit.Mvvm.Messaging;
+using FrontEnd.InterfazHMI.Tests.Support;
 using Frontend_interfaz_Multimodal_HMI.Services;
 using Frontend_interfaz_Multimodal_HMI.ViewModels;
-using FrontEnd.InterfazHMI.Tests.Support;
-using System.Threading.Channels;
 
 namespace FrontEnd.InterfazHMI.Tests.Integration;
 
@@ -69,7 +69,7 @@ public class CatalogSyncFlowTests
         var received = new List<CatalogChangedMessage>();
         var spy = new object();
         WeakReferenceMessenger.Default.Register<object, CatalogChangedMessage>(
-            spy, (_, message) => { lock (received) received.Add(message); });
+            spy, (_, message) => { lock (received) { received.Add(message); } });
 
         try
         {

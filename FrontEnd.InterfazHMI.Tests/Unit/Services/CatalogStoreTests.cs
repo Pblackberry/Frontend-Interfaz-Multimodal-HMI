@@ -1,7 +1,7 @@
 using CommunityToolkit.Mvvm.Messaging;
+using FrontEnd.InterfazHMI.Tests.Support;
 using Frontend_interfaz_Multimodal_HMI.Models;
 using Frontend_interfaz_Multimodal_HMI.Services;
-using FrontEnd.InterfazHMI.Tests.Support;
 
 namespace FrontEnd.InterfazHMI.Tests.Unit.Services;
 
@@ -87,8 +87,8 @@ public class CatalogStoreTests : IDisposable
         _sut.Update(first);
         _sut.Update(second);
 
-        Assert.Single(_received.Where(m => ReferenceEquals(m.Snapshot, first)));
-        Assert.Single(_received.Where(m => ReferenceEquals(m.Snapshot, second)));
+        Assert.Single(_received, m => ReferenceEquals(m.Snapshot, first));
+        Assert.Single(_received, m => ReferenceEquals(m.Snapshot, second));
     }
 
     [Fact]

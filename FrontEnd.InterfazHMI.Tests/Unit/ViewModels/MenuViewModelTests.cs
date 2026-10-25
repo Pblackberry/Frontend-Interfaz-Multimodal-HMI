@@ -1,8 +1,8 @@
 using CommunityToolkit.Mvvm.Messaging;
+using FrontEnd.InterfazHMI.Tests.Support;
 using Frontend_interfaz_Multimodal_HMI.Models;
 using Frontend_interfaz_Multimodal_HMI.Services;
 using Frontend_interfaz_Multimodal_HMI.ViewModels;
-using FrontEnd.InterfazHMI.Tests.Support;
 
 namespace FrontEnd.InterfazHMI.Tests.Unit.ViewModels;
 
@@ -15,14 +15,18 @@ public class MenuViewModelTests : IDisposable
     public void Dispose()
     {
         foreach (var vm in _created)
+        {
             vm.IsActive = false;
+        }
     }
 
     private (MenuViewModel Sut, CatalogStore Store) CreateSut(params CobotMenuItem[] items)
     {
         var store = new CatalogStore();
         if (items.Length > 0)
+        {
             store.Update(TestData.Payload("f1", items));
+        }
 
         var sut = new MenuViewModel(store);
         _created.Add(sut);

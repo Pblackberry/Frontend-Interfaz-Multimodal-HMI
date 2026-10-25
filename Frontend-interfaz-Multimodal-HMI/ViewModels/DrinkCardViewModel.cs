@@ -12,9 +12,9 @@ public sealed class DrinkCardViewModel
     {
         Item = item;
         Name = item.NombreItem;
-        
+
         PriceText = "$" + item.PrecioItem.ToString("0.00", CultureInfo.InvariantCulture);
-        ImageUrl = null; 
+        ImageUrl = null;
     }
 
     public CobotMenuItem Item { get; }   // el objeto original, para cuando se haga el pedido

@@ -1,6 +1,6 @@
+using FrontEnd.InterfazHMI.Tests.Support;
 using Frontend_interfaz_Multimodal_HMI.Services;
 using Frontend_interfaz_Multimodal_HMI.ViewModels;
-using FrontEnd.InterfazHMI.Tests.Support;
 
 namespace FrontEnd.InterfazHMI.Tests.Unit.Services;
 
@@ -33,7 +33,9 @@ public class NavigationServiceTests : IDisposable
     public void Dispose()
     {
         foreach (var menu in _menus)
+        {
             menu.IsActive = false;
+        }
     }
 
     private WelcomeViewModel RegisterWelcome()

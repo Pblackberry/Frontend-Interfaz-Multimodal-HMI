@@ -14,10 +14,10 @@ namespace Frontend_interfaz_Multimodal_HMI;
 public partial class App : Application
 {
     // Ajusta host, puerto y ruta a los de tu backend
-    private const string WsUrl = "ws://localhost:8888/ws";                 
+    private const string WsUrl = "ws://localhost:8888/ws";
 
     private ServiceProvider? _services;
-    private readonly CancellationTokenSource _cts = new();                 
+    private readonly CancellationTokenSource _cts = new();
 
     protected override void OnStartup(StartupEventArgs e)
     {
@@ -25,8 +25,8 @@ public partial class App : Application
 
         var sc = new ServiceCollection();
         sc.AddSingleton<INavigationService, NavigationService>();
-        sc.AddSingleton<CatalogStore>();                                    
-        sc.AddSingleton(new WsClient(new Uri(WsUrl)));                      
+        sc.AddSingleton<CatalogStore>();
+        sc.AddSingleton(new WsClient(new Uri(WsUrl)));
         sc.AddSingleton<MainViewModel>();
         sc.AddTransient<WelcomeViewModel>();
         sc.AddTransient<MenuViewModel>();
@@ -43,7 +43,7 @@ public partial class App : Application
 
     protected override void OnExit(ExitEventArgs e)
     {
-        _cts.Cancel();                                                      
+        _cts.Cancel();
         _services?.Dispose();
         base.OnExit(e);
     }

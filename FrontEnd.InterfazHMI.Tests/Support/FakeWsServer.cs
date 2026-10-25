@@ -96,7 +96,11 @@ internal sealed class FakeWsServer : IAsyncDisposable
 
             var socket = WebSocket.CreateFromStream(
                 stream, new WebSocketCreationOptions { IsServer = true, KeepAliveInterval = TimeSpan.Zero });
-            lock (_accepted) _accepted.Add(socket);
+            lock (_accepted)
+            {
+                _accepted.Add(socket);
+            }
+
             Interlocked.Increment(ref _connectionCount);
             _connections.Writer.TryWrite(socket);
         }
@@ -113,13 +117,21 @@ internal sealed class FakeWsServer : IAsyncDisposable
         while (true)
         {
             if (await stream.ReadAsync(one) == 0)
+            {
                 throw new IOException("Conexión cerrada durante el handshake");
+            }
+
             bytes.Add(one[0]);
             var n = bytes.Count;
             if (n >= 4 && bytes[n - 4] == '\r' && bytes[n - 3] == '\n' && bytes[n - 2] == '\r' && bytes[n - 1] == '\n')
+            {
                 return Encoding.ASCII.GetString(bytes.ToArray());
+            }
+
             if (n > 16 * 1024)
+            {
                 throw new IOException("Cabeceras demasiado grandes");
+            }
         }
     }
 
@@ -130,7 +142,9 @@ internal sealed class FakeWsServer : IAsyncDisposable
         lock (_accepted)
         {
             foreach (var socket in _accepted)
+            {
                 socket.Dispose();
+            }
         }
         await _acceptLoop;
         _cts.Dispose();
