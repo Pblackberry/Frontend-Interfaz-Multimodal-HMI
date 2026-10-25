@@ -14,7 +14,7 @@ namespace Frontend_interfaz_Multimodal_HMI;
 public partial class App : Application
 {
     // Ajusta host, puerto y ruta a los de tu backend
-    private const string WsUrl = "ws://localhost:8888/ws";
+    private const string _wsUrl = "ws://localhost:8888/ws";
 
     private ServiceProvider? _services;
     private readonly CancellationTokenSource _cts = new();
@@ -26,7 +26,7 @@ public partial class App : Application
         var sc = new ServiceCollection();
         sc.AddSingleton<INavigationService, NavigationService>();
         sc.AddSingleton<CatalogStore>();
-        sc.AddSingleton(new WsClient(new Uri(WsUrl)));
+        sc.AddSingleton(new WsClient(new Uri(_wsUrl)));
         sc.AddSingleton<MainViewModel>();
         sc.AddTransient<WelcomeViewModel>();
         sc.AddTransient<MenuViewModel>();

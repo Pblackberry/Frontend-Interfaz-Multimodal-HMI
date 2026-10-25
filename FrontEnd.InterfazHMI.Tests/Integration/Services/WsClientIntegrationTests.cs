@@ -9,7 +9,7 @@ namespace FrontEnd.InterfazHMI.Tests.Integration.Services;
 
 public class WsClientIntegrationTests
 {
-    private static readonly TimeSpan Timeout = TimeSpan.FromSeconds(10);
+    private static readonly TimeSpan _timeout = TimeSpan.FromSeconds(10);
 
     private sealed class ClientRun : IAsyncDisposable
     {
@@ -34,14 +34,14 @@ public class WsClientIntegrationTests
         public void Start() => _run = Client.RunAsync(_cts.Token);
 
         public Task<CatalogUpdatePayload> NextUpdateAsync()
-            => Updates.Reader.ReadAsync().AsTask().WaitAsync(Timeout);
+            => Updates.Reader.ReadAsync().AsTask().WaitAsync(_timeout);
 
         public async Task StopAsync()
         {
             _cts.Cancel();
             if (_run is not null)
             {
-                await _run.WaitAsync(Timeout);
+                await _run.WaitAsync(_timeout);
             }
         }
 
@@ -266,7 +266,7 @@ public class WsClientIntegrationTests
         using var cts = new CancellationTokenSource();
         cts.Cancel();
 
-        await new WsClient(server.Uri).RunAsync(cts.Token).WaitAsync(Timeout);
+        await new WsClient(server.Uri).RunAsync(cts.Token).WaitAsync(_timeout);
 
         Assert.Equal(0, server.ConnectionCount);
     }

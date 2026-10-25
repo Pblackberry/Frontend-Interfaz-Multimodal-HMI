@@ -6,23 +6,18 @@ using Frontend_interfaz_Multimodal_HMI.ViewModels;
 
 namespace FrontEnd.InterfazHMI.Tests.Integration;
 
-/// <summary>
-/// Flujo completo del frontend: servidor WebSocket -> WsClient -> CatalogStore -> mensaje -> MenuViewModel.
-/// Replica la conexión que hace la app (WsClient.CatalogUpdated += store.Update).
-/// </summary>
 [Collection(MessengerCollection.Name)]
 public class CatalogSyncFlowTests
 {
-    private static readonly TimeSpan Timeout = TimeSpan.FromSeconds(10);
+    private static readonly TimeSpan _timeout = TimeSpan.FromSeconds(10);
 
-    private const string UpdateMessage =
+    private const string _updateMessage =
         "{\"id\":\"a1\",\"ts\":\"2026-10-22T10:00:00Z\",\"type\":\"catalog_update\",\"payload\":{" +
         "\"ultima_actualizacion\":\"f1\",\"catalogo\":{\"items\":[" +
         "{\"nombre_item\":\"Mojito\",\"precio_item\":\"5.50\",\"estado\":true,\"ingredientes\":null,\"codigo_modbus\":\"0x01\"}," +
         "{\"nombre_item\":\"Daiquiri\",\"precio_item\":\"6.00\",\"estado\":true,\"ingredientes\":null,\"codigo_modbus\":\"0x02\"}" +
         "],\"total\":2}}}";
 
-    /// <summary>Conecta WsClient y CatalogStore como en la app y espera a que el store procese la actualización.</summary>
     private static async Task<CatalogStore> SyncOnceAsync(FakeWsServer server)
     {
         var store = new CatalogStore();
@@ -39,13 +34,13 @@ public class CatalogSyncFlowTests
         try
         {
             var socket = await server.AcceptAsync();
-            await FakeWsServer.SendTextAsync(socket, UpdateMessage);
-            await processed.Reader.ReadAsync().AsTask().WaitAsync(Timeout);
+            await FakeWsServer.SendTextAsync(socket, _updateMessage);
+            await processed.Reader.ReadAsync().AsTask().WaitAsync(_timeout);
         }
         finally
         {
             cts.Cancel();
-            await run.WaitAsync(Timeout);
+            await run.WaitAsync(_timeout);
         }
 
         return store;

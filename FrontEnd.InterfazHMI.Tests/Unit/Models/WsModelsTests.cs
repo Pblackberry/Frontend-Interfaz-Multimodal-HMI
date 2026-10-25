@@ -5,9 +5,8 @@ namespace FrontEnd.InterfazHMI.Tests.Unit.Models;
 
 public class WsModelsTests
 {
-    // Mensaje tal como lo envía el backend (FastAPI/pydantic): snake_case,
-    // Decimal serializado como string y fecha ISO-8601 en UTC.
-    private const string BackendCatalogUpdate =
+
+    private const string _backendCatalogUpdate =
         "{'id':'a1b2c3','ts':'2026-10-22T10:00:00Z','type':'catalog_update'," +
         "'payload':{'ultima_actualizacion':'2026-10-22T09:59:00'," +
         "'catalogo':{'items':[{'nombre_item':'Mojito','precio_item':'5.50','estado':true}]," +
@@ -18,7 +17,6 @@ public class WsModelsTests
     private static T? Deserialize<T>(string singleQuotedJson)
         => JsonSerializer.Deserialize<T>(Json(singleQuotedJson), WsJson.Options);
 
-    // DTOs mínimos solo para estas pruebas
     private sealed class ItemDto
     {
         public string NombreItem { get; set; } = "";
@@ -151,7 +149,7 @@ public class WsModelsTests
     [Fact]
     public void Envelope_Deserialize_MapsAllFieldsFromBackendMessage()
     {
-        var envelope = Deserialize<WsEnvelope>(BackendCatalogUpdate)!;
+        var envelope = Deserialize<WsEnvelope>(_backendCatalogUpdate)!;
 
         Assert.Equal("a1b2c3", envelope.Id);
         Assert.Equal(WsTypes.CatalogUpdate, envelope.Type);
@@ -161,7 +159,7 @@ public class WsModelsTests
     [Fact]
     public void Envelope_Deserialize_KeepsTimestampInUtc()
     {
-        var envelope = Deserialize<WsEnvelope>(BackendCatalogUpdate)!;
+        var envelope = Deserialize<WsEnvelope>(_backendCatalogUpdate)!;
 
         Assert.Equal(new DateTimeOffset(2026, 10, 22, 10, 0, 0, TimeSpan.Zero), envelope.Ts);
         Assert.Equal(TimeSpan.Zero, envelope.Ts.Offset);
@@ -180,7 +178,7 @@ public class WsModelsTests
     [Fact]
     public void Envelope_Payload_CanBeConvertedOnceTheTypeIsKnown()
     {
-        var envelope = Deserialize<WsEnvelope>(BackendCatalogUpdate)!;
+        var envelope = Deserialize<WsEnvelope>(_backendCatalogUpdate)!;
 
         var payload = envelope.Payload.Deserialize<PayloadDto>(WsJson.Options)!;
 
@@ -208,7 +206,7 @@ public class WsModelsTests
     [Fact]
     public void Envelope_Serialize_UsesSnakeCaseAndKeepsThePayload()
     {
-        var original = Deserialize<WsEnvelope>(BackendCatalogUpdate)!;
+        var original = Deserialize<WsEnvelope>(_backendCatalogUpdate)!;
 
         var json = JsonSerializer.Serialize(original, WsJson.Options);
         var roundTrip = JsonSerializer.Deserialize<WsEnvelope>(json, WsJson.Options)!;

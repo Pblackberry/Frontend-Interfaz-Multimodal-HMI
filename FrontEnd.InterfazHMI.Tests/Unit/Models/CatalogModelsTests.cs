@@ -5,7 +5,7 @@ namespace FrontEnd.InterfazHMI.Tests.Unit.Models;
 
 public class CatalogModelsTests
 {
-    private const string BackendMessage =
+    private const string _backendMessage =
         "{'id':'a1','ts':'2026-10-22T10:00:00Z','type':'catalog_update','payload':{" +
         "'ultima_actualizacion':'2026-10-22T09:59:00','catalogo':{'items':[" +
         "{'nombre_item':'Mojito','precio_item':'5.50','estado':true,'ingredientes':'Ron, menta','codigo_modbus':'0x01'}," +
@@ -14,7 +14,7 @@ public class CatalogModelsTests
 
     private static CatalogUpdatePayload ReadPayload()
     {
-        var json = BackendMessage.Replace('\'', '"');
+        var json = _backendMessage.Replace('\'', '"');
         var envelope = JsonSerializer.Deserialize<WsEnvelope>(json, WsJson.Options)!;
         return envelope.Payload.Deserialize<CatalogUpdatePayload>(WsJson.Options)!;
     }
