@@ -19,10 +19,22 @@ public static class WsJson
 public static class WsTypes
 {
     public const string CatalogUpdate = "catalog_update";
+    public const string State = "state";
 }
 
-// Sobre común de todos los mensajes; el payload queda como JsonElement
-// hasta saber el tipo.
+public enum Screen { Welcome, Menu }
+public enum StateSource { Touch, Backend, Init }
+
+
+public sealed class WsEnvelope<T>
+{
+    public string Id { get; set; } = Guid.NewGuid().ToString("N");
+    public DateTimeOffset Ts { get; set; } = DateTimeOffset.UtcNow;
+    public required string Type { get; set; }
+    public required T Payload { get; set; }
+}
+
+public sealed record StatePayload(Screen Screen, StateSource Source, string? Ref = null);
 public sealed class WsEnvelope
 {
     public string Id { get; set; } = "";

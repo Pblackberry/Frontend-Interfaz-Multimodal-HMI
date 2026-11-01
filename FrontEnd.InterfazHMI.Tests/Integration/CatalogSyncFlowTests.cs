@@ -14,8 +14,8 @@ public class CatalogSyncFlowTests
     private const string _updateMessage =
         "{\"id\":\"a1\",\"ts\":\"2026-10-22T10:00:00Z\",\"type\":\"catalog_update\",\"payload\":{" +
         "\"ultima_actualizacion\":\"f1\",\"catalogo\":{\"items\":[" +
-        "{\"nombre_item\":\"Mojito\",\"precio_item\":\"5.50\",\"estado\":true,\"ingredientes\":null,\"codigo_modbus\":\"0x01\"}," +
-        "{\"nombre_item\":\"Daiquiri\",\"precio_item\":\"6.00\",\"estado\":true,\"ingredientes\":null,\"codigo_modbus\":\"0x02\"}" +
+        "{\"nombre_item\":\"Mojito\",\"precio_item\":\"5.50\",\"estado\":true,\"ingredientes\":null,\"codigo_modbus\":1}," +
+        "{\"nombre_item\":\"Daiquiri\",\"precio_item\":\"6.00\",\"estado\":true,\"ingredientes\":null,\"codigo_modbus\":2}" +
         "],\"total\":2}}}";
 
     private static async Task<CatalogStore> SyncOnceAsync(FakeWsServer server)

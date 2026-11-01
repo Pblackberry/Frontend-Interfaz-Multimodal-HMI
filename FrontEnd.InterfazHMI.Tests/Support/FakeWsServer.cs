@@ -6,10 +6,9 @@ using System.Text;
 using System.Threading.Channels;
 
 namespace FrontEnd.InterfazHMI.Tests.Support;
-
 internal sealed class FakeWsServer : IAsyncDisposable
 {
-    private const string _handshakeGuid = "258EAFA5-E914-47DA-95CA-C5AB0DC85B11";
+    private const string HandshakeGuid = "258EAFA5-E914-47DA-95CA-C5AB0DC85B11";
 
     private readonly TcpListener _listener;
     private readonly CancellationTokenSource _cts = new();
@@ -48,6 +47,41 @@ internal sealed class FakeWsServer : IAsyncDisposable
             WebSocketMessageType.Text, true, CancellationToken.None);
     }
 
+    public static async Task<string> ReceiveTextAsync(WebSocket socket, TimeSpan? timeout = null)
+        => await ReadMessageAsync(socket).WaitAsync(timeout ?? TimeSpan.FromSeconds(10));
+
+    public static async Task<string?> TryReceiveTextAsync(WebSocket socket, TimeSpan timeout)
+    {
+        var read = ReadMessageAsync(socket);
+        var finished = await Task.WhenAny(read, Task.Delay(timeout));
+        if (finished == read)
+        {
+            return await read;
+        }
+
+        _ = read.ContinueWith(t => t.Exception, TaskContinuationOptions.OnlyOnFaulted); 
+        return null;
+    }
+
+    private static async Task<string> ReadMessageAsync(WebSocket socket)
+    {
+        var buffer = new byte[8192];
+        using var ms = new MemoryStream();
+        WebSocketReceiveResult result;
+        do
+        {
+            result = await socket.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
+            if (result.MessageType == WebSocketMessageType.Close)
+            {
+                throw new IOException("El cliente cerró la conexión");
+            }
+
+            ms.Write(buffer, 0, result.Count);
+        } while (!result.EndOfMessage);
+
+        return Encoding.UTF8.GetString(ms.GetBuffer(), 0, (int)ms.Length);
+    }
+
     public static int GetFreePort()
     {
         var probe = new TcpListener(IPAddress.Loopback, 0);
@@ -81,7 +115,7 @@ internal sealed class FakeWsServer : IAsyncDisposable
             var keyLine = request.Split("\r\n")
                 .First(l => l.StartsWith("Sec-WebSocket-Key:", StringComparison.OrdinalIgnoreCase));
             var key = keyLine.Split(':', 2)[1].Trim();
-            var accept = Convert.ToBase64String(SHA1.HashData(Encoding.ASCII.GetBytes(key + _handshakeGuid)));
+            var accept = Convert.ToBase64String(SHA1.HashData(Encoding.ASCII.GetBytes(key + HandshakeGuid)));
 
             var response =
                 "HTTP/1.1 101 Switching Protocols\r\n" +

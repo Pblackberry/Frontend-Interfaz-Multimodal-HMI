@@ -56,7 +56,7 @@ public class WsClientIntegrationTests
     {
         var items = string.Join(",", nombres.Select(n =>
             "{\"nombre_item\":\"" + n + "\",\"precio_item\":\"5.50\",\"estado\":true," +
-            "\"ingredientes\":null,\"codigo_modbus\":\"0x01\"}"));
+            "\"ingredientes\":null,\"codigo_modbus\":1}"));
         return "{\"id\":\"a1\",\"ts\":\"2026-10-22T10:00:00Z\",\"type\":\"catalog_update\"," +
                "\"payload\":{\"ultima_actualizacion\":\"" + fecha + "\"," +
                "\"catalogo\":{\"items\":[" + items + "],\"total\":" + nombres.Length + "}}}";

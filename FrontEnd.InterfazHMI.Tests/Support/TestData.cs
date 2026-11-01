@@ -12,12 +12,14 @@ internal static class TestData
         decimal precio = 5.5m,
         bool estado = true,
         string? ingredientes = "Ron, menta",
-        string? codigoModbus = "0x01") => new()
+        string imagen = "https://example.com",
+        int? codigoModbus = 1) => new()
         {
             NombreItem = nombre,
             PrecioItem = precio,
             Estado = estado,
             Ingredientes = ingredientes,
+            Imagen = imagen,
             CodigoModbus = codigoModbus,
         };
 

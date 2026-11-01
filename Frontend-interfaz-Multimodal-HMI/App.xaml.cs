@@ -30,7 +30,9 @@ public partial class App : Application
         sc.AddSingleton<MainViewModel>();
         sc.AddTransient<WelcomeViewModel>();
         sc.AddTransient<MenuViewModel>();
+        sc.AddSingleton<BackendLink>();
         _services = sc.BuildServiceProvider();
+        _ = _services.GetRequiredService<BackendLink>();
 
         var store = _services.GetRequiredService<CatalogStore>();
         var ws = _services.GetRequiredService<WsClient>();

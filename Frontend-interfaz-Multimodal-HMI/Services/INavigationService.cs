@@ -1,15 +1,18 @@
 using System.ComponentModel;
 using CommunityToolkit.Mvvm.ComponentModel;
+using Frontend_interfaz_Multimodal_HMI.Models;
 
 namespace Frontend_interfaz_Multimodal_HMI.Services;
 
 public interface INavigationService : INotifyPropertyChanged
 {
-    /// <summary>ViewModel de la pantalla actual (la vista se resuelve por DataTemplate).</summary>
     ObservableObject? Current { get; }
 
     void NavigateTo<T>() where T : ObservableObject;
 
-    /// <summary>Navega por nombre ("welcome", "menu"). Es lo que usará el mensaje "navigate" del backend.</summary>
     void NavigateTo(string screen);
+
+    Screen? CurrentScreen { get; }
+    event Action<Screen, StateSource, string?>? Navigated;
+    void NavigateTo(Screen screen, StateSource source = StateSource.Touch, string? orderId = null);
 }
