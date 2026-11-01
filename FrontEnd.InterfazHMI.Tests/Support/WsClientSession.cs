@@ -5,7 +5,7 @@ namespace FrontEnd.InterfazHMI.Tests.Support;
 
 internal sealed class WsClientSession : IAsyncDisposable
 {
-    private static readonly TimeSpan Timeout = TimeSpan.FromSeconds(10);
+    private static readonly TimeSpan _timeout = TimeSpan.FromSeconds(10);
 
     private readonly CancellationTokenSource _cts;
     private readonly Task _run;
@@ -30,7 +30,7 @@ internal sealed class WsClientSession : IAsyncDisposable
 
         var run = client.RunAsync(cts.Token);
         var socket = await server.AcceptAsync();
-        if (!SpinWait.SpinUntil(() => client.IsConnected, Timeout))
+        if (!SpinWait.SpinUntil(() => client.IsConnected, _timeout))
         {
             throw new TimeoutException("El cliente no llegó a estar conectado");
         }
@@ -41,7 +41,7 @@ internal sealed class WsClientSession : IAsyncDisposable
     public async Task StopAsync()
     {
         _cts.Cancel();
-        await _run.WaitAsync(Timeout);
+        await _run.WaitAsync(_timeout);
     }
 
     public async ValueTask DisposeAsync()

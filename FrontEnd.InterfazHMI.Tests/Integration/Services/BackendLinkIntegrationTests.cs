@@ -7,7 +7,7 @@ namespace FrontEnd.InterfazHMI.Tests.Integration.Services;
 
 public class BackendLinkIntegrationTests
 {
-    private static readonly TimeSpan NoMessageWait = TimeSpan.FromMilliseconds(400);
+    private static readonly TimeSpan _noMessageWait = TimeSpan.FromMilliseconds(400);
 
     private static JsonElement Parse(string json)
     {
@@ -128,7 +128,7 @@ public class BackendLinkIntegrationTests
             link = new BackendLink(client, nav);
             nav.RaiseNavigated(Screen.Menu, StateSource.Touch);
         });
-        var late = await FakeWsServer.TryReceiveTextAsync(session.ServerSocket, NoMessageWait);
+        var late = await FakeWsServer.TryReceiveTextAsync(session.ServerSocket, _noMessageWait);
 
         Assert.NotNull(link);
         Assert.Null(late);

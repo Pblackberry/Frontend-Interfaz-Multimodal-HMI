@@ -10,7 +10,7 @@ namespace FrontEnd.InterfazHMI.Tests.Integration;
 [Collection(MessengerCollection.Name)]
 public class StateReportingFlowTests
 {
-    private static readonly TimeSpan NoMessageWait = TimeSpan.FromMilliseconds(400);
+    private static readonly TimeSpan _noMessageWait = TimeSpan.FromMilliseconds(400);
 
     private static ServiceProvider BuildProvider()
     {
@@ -130,7 +130,7 @@ public class StateReportingFlowTests
         using var _p = provider;
 
         main.Navigation.NavigateTo("no_existe");
-        var message = await FakeWsServer.TryReceiveTextAsync(session.ServerSocket, NoMessageWait);
+        var message = await FakeWsServer.TryReceiveTextAsync(session.ServerSocket, _noMessageWait);
 
         Assert.Null(message);
         Assert.Equal(Screen.Welcome, main.Navigation.CurrentScreen);
@@ -150,7 +150,7 @@ public class StateReportingFlowTests
             link = new BackendLink(client, nav);
             nav.NavigateTo("menu");
         });
-        var message = await FakeWsServer.TryReceiveTextAsync(session.ServerSocket, NoMessageWait);
+        var message = await FakeWsServer.TryReceiveTextAsync(session.ServerSocket, _noMessageWait);
 
         Assert.NotNull(link);
         Assert.IsType<MenuViewModel>(main.Navigation.Current);

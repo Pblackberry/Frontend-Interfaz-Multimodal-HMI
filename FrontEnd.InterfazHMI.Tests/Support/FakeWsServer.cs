@@ -6,9 +6,10 @@ using System.Text;
 using System.Threading.Channels;
 
 namespace FrontEnd.InterfazHMI.Tests.Support;
+
 internal sealed class FakeWsServer : IAsyncDisposable
 {
-    private const string HandshakeGuid = "258EAFA5-E914-47DA-95CA-C5AB0DC85B11";
+    private const string _handshakeGuid = "258EAFA5-E914-47DA-95CA-C5AB0DC85B11";
 
     private readonly TcpListener _listener;
     private readonly CancellationTokenSource _cts = new();
@@ -59,7 +60,7 @@ internal sealed class FakeWsServer : IAsyncDisposable
             return await read;
         }
 
-        _ = read.ContinueWith(t => t.Exception, TaskContinuationOptions.OnlyOnFaulted); 
+        _ = read.ContinueWith(t => t.Exception, TaskContinuationOptions.OnlyOnFaulted);
         return null;
     }
 
@@ -115,7 +116,7 @@ internal sealed class FakeWsServer : IAsyncDisposable
             var keyLine = request.Split("\r\n")
                 .First(l => l.StartsWith("Sec-WebSocket-Key:", StringComparison.OrdinalIgnoreCase));
             var key = keyLine.Split(':', 2)[1].Trim();
-            var accept = Convert.ToBase64String(SHA1.HashData(Encoding.ASCII.GetBytes(key + HandshakeGuid)));
+            var accept = Convert.ToBase64String(SHA1.HashData(Encoding.ASCII.GetBytes(key + _handshakeGuid)));
 
             var response =
                 "HTTP/1.1 101 Switching Protocols\r\n" +

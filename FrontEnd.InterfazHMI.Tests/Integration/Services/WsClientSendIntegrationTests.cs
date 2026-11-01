@@ -7,7 +7,7 @@ namespace FrontEnd.InterfazHMI.Tests.Integration.Services;
 
 public class WsClientSendIntegrationTests
 {
-    private static readonly TimeSpan Timeout = TimeSpan.FromSeconds(10);
+    private static readonly TimeSpan _timeout = TimeSpan.FromSeconds(10);
 
     private sealed record Ping(int N, string TextoLibre);
 
@@ -233,7 +233,7 @@ public class WsClientSendIntegrationTests
             System.Net.WebSockets.WebSocketCloseStatus.NormalClosure, "bye", CancellationToken.None);
 
         var second = await server.AcceptAsync();
-        SpinWait.SpinUntil(() => session.Client.IsConnected && Volatile.Read(ref connectedCount) == 2, Timeout);
+        SpinWait.SpinUntil(() => session.Client.IsConnected && Volatile.Read(ref connectedCount) == 2, _timeout);
         var sent = await session.Client.SendAsync("ping", new Ping(7, "otra vez"));
         var message = Parse(await FakeWsServer.ReceiveTextAsync(second));
 
