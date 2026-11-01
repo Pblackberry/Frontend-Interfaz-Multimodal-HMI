@@ -48,6 +48,41 @@ internal sealed class FakeWsServer : IAsyncDisposable
             WebSocketMessageType.Text, true, CancellationToken.None);
     }
 
+    public static async Task<string> ReceiveTextAsync(WebSocket socket, TimeSpan? timeout = null)
+        => await ReadMessageAsync(socket).WaitAsync(timeout ?? TimeSpan.FromSeconds(10));
+
+    public static async Task<string?> TryReceiveTextAsync(WebSocket socket, TimeSpan timeout)
+    {
+        var read = ReadMessageAsync(socket);
+        var finished = await Task.WhenAny(read, Task.Delay(timeout));
+        if (finished == read)
+        {
+            return await read;
+        }
+
+        _ = read.ContinueWith(t => t.Exception, TaskContinuationOptions.OnlyOnFaulted);
+        return null;
+    }
+
+    private static async Task<string> ReadMessageAsync(WebSocket socket)
+    {
+        var buffer = new byte[8192];
+        using var ms = new MemoryStream();
+        WebSocketReceiveResult result;
+        do
+        {
+            result = await socket.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
+            if (result.MessageType == WebSocketMessageType.Close)
+            {
+                throw new IOException("El cliente cerró la conexión");
+            }
+
+            ms.Write(buffer, 0, result.Count);
+        } while (!result.EndOfMessage);
+
+        return Encoding.UTF8.GetString(ms.GetBuffer(), 0, (int)ms.Length);
+    }
+
     public static int GetFreePort()
     {
         var probe = new TcpListener(IPAddress.Loopback, 0);

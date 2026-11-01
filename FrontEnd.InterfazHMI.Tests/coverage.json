@@ -1,0 +1,956 @@
+{
+  "Frontend-interfaz-Multimodal-HMI.dll": {
+    "C:\\UDLA Noveno Semstre\\TITA\\Interfaz multi modal\\Front\\Frontend-interfaz-Multimodal-HMI\\ViewModels\\DrinkCardViewModel.cs": {
+      "Frontend_interfaz_Multimodal_HMI.ViewModels.DrinkCardViewModel": {
+        "Frontend_interfaz_Multimodal_HMI.Models.CobotMenuItem Frontend_interfaz_Multimodal_HMI.ViewModels.DrinkCardViewModel::get_Item()": {
+          "Lines": {
+            "20": 3
+          },
+          "Branches": []
+        },
+        "System.String Frontend_interfaz_Multimodal_HMI.ViewModels.DrinkCardViewModel::get_Name()": {
+          "Lines": {
+            "21": 9
+          },
+          "Branches": []
+        },
+        "System.String Frontend_interfaz_Multimodal_HMI.ViewModels.DrinkCardViewModel::get_PriceText()": {
+          "Lines": {
+            "22": 9
+          },
+          "Branches": []
+        },
+        "System.String Frontend_interfaz_Multimodal_HMI.ViewModels.DrinkCardViewModel::get_ImageUrl()": {
+          "Lines": {
+            "23": 1
+          },
+          "Branches": []
+        },
+        "System.Void Frontend_interfaz_Multimodal_HMI.ViewModels.DrinkCardViewModel::.ctor(Frontend_interfaz_Multimodal_HMI.Models.CobotMenuItem)": {
+          "Lines": {
+            "11": 22,
+            "12": 22,
+            "13": 22,
+            "14": 22,
+            "16": 22,
+            "17": 22,
+            "18": 22
+          },
+          "Branches": []
+        }
+      }
+    },
+    "C:\\UDLA Noveno Semstre\\TITA\\Interfaz multi modal\\Front\\Frontend-interfaz-Multimodal-HMI\\ViewModels\\MainViewModel.cs": {
+      "Frontend_interfaz_Multimodal_HMI.ViewModels.MainViewModel": {
+        "Frontend_interfaz_Multimodal_HMI.Services.INavigationService Frontend_interfaz_Multimodal_HMI.ViewModels.MainViewModel::get_Navigation()": {
+          "Lines": {
+            "12": 60
+          },
+          "Branches": []
+        },
+        "System.Void Frontend_interfaz_Multimodal_HMI.ViewModels.MainViewModel::GoHome()": {
+          "Lines": {
+            "21": 7
+          },
+          "Branches": []
+        },
+        "System.Void Frontend_interfaz_Multimodal_HMI.ViewModels.MainViewModel::.ctor(Frontend_interfaz_Multimodal_HMI.Services.INavigationService)": {
+          "Lines": {
+            "14": 20,
+            "15": 20,
+            "16": 20,
+            "17": 20,
+            "18": 20
+          },
+          "Branches": []
+        }
+      }
+    },
+    "C:\\UDLA Noveno Semstre\\TITA\\Interfaz multi modal\\Front\\Frontend-interfaz-Multimodal-HMI\\ViewModels\\MenuViewModel.cs": {
+      "Frontend_interfaz_Multimodal_HMI.ViewModels.MenuViewModel": {
+        "System.Collections.ObjectModel.ObservableCollection`1<Frontend_interfaz_Multimodal_HMI.ViewModels.DrinkCardViewModel> Frontend_interfaz_Multimodal_HMI.ViewModels.MenuViewModel::get_Items()": {
+          "Lines": {
+            "17": 113
+          },
+          "Branches": []
+        },
+        "System.Void Frontend_interfaz_Multimodal_HMI.ViewModels.MenuViewModel::Receive(Frontend_interfaz_Multimodal_HMI.Services.CatalogChangedMessage)": {
+          "Lines": {
+            "26": 281
+          },
+          "Branches": [
+            {
+              "Line": 26,
+              "Offset": 26,
+              "EndOffset": 28,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 281
+            },
+            {
+              "Line": 26,
+              "Offset": 26,
+              "EndOffset": 31,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            }
+          ]
+        },
+        "System.Void Frontend_interfaz_Multimodal_HMI.ViewModels.MenuViewModel::Load(System.Collections.Generic.IEnumerable`1<Frontend_interfaz_Multimodal_HMI.Models.CobotMenuItem>)": {
+          "Lines": {
+            "29": 43,
+            "30": 43,
+            "31": 155,
+            "32": 13,
+            "33": 13,
+            "34": 13,
+            "35": 43
+          },
+          "Branches": [
+            {
+              "Line": 31,
+              "Offset": 56,
+              "EndOffset": 23,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 13
+            },
+            {
+              "Line": 31,
+              "Offset": 56,
+              "EndOffset": 58,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 43
+            }
+          ]
+        },
+        "System.Void Frontend_interfaz_Multimodal_HMI.ViewModels.MenuViewModel::SelectDrink(Frontend_interfaz_Multimodal_HMI.ViewModels.DrinkCardViewModel)": {
+          "Lines": {
+            "39": 2,
+            "40": 2,
+            "41": 1,
+            "42": 1,
+            "45": 1,
+            "46": 2
+          },
+          "Branches": [
+            {
+              "Line": 40,
+              "Offset": 7,
+              "EndOffset": 9,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 1
+            },
+            {
+              "Line": 40,
+              "Offset": 7,
+              "EndOffset": 12,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 1
+            }
+          ]
+        },
+        "System.Void Frontend_interfaz_Multimodal_HMI.ViewModels.MenuViewModel::.ctor(Frontend_interfaz_Multimodal_HMI.Services.CatalogStore)": {
+          "Lines": {
+            "19": 43,
+            "20": 43,
+            "21": 43,
+            "22": 43,
+            "23": 43
+          },
+          "Branches": []
+        }
+      }
+    },
+    "C:\\UDLA Noveno Semstre\\TITA\\Interfaz multi modal\\Front\\Frontend-interfaz-Multimodal-HMI\\ViewModels\\WelcomeViewModel.cs": {
+      "Frontend_interfaz_Multimodal_HMI.ViewModels.WelcomeViewModel": {
+        "System.Void Frontend_interfaz_Multimodal_HMI.ViewModels.WelcomeViewModel::StartOrder()": {
+          "Lines": {
+            "17": 3
+          },
+          "Branches": []
+        },
+        "System.Void Frontend_interfaz_Multimodal_HMI.ViewModels.WelcomeViewModel::StartListening()": {
+          "Lines": {
+            "21": 2
+          },
+          "Branches": []
+        },
+        "System.Void Frontend_interfaz_Multimodal_HMI.ViewModels.WelcomeViewModel::.ctor(Frontend_interfaz_Multimodal_HMI.Services.INavigationService)": {
+          "Lines": {
+            "14": 102
+          },
+          "Branches": []
+        }
+      }
+    },
+    "C:\\UDLA Noveno Semstre\\TITA\\Interfaz multi modal\\Front\\Frontend-interfaz-Multimodal-HMI\\Services\\BackendLink.cs": {
+      "Frontend_interfaz_Multimodal_HMI.Services.BackendLink": {
+        "System.Void Frontend_interfaz_Multimodal_HMI.Services.BackendLink::OnNavigated(Frontend_interfaz_Multimodal_HMI.Models.Screen,Frontend_interfaz_Multimodal_HMI.Models.StateSource,System.String)": {
+          "Lines": {
+            "20": 25
+          },
+          "Branches": []
+        },
+        "System.Void Frontend_interfaz_Multimodal_HMI.Services.BackendLink::OnConnected()": {
+          "Lines": {
+            "23": 2,
+            "24": 0,
+            "25": 0,
+            "26": 0,
+            "27": 2
+          },
+          "Branches": [
+            {
+              "Line": 23,
+              "Offset": 6,
+              "EndOffset": 8,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 2
+            },
+            {
+              "Line": 23,
+              "Offset": 6,
+              "EndOffset": 11,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            }
+          ]
+        },
+        "System.Void Frontend_interfaz_Multimodal_HMI.Services.BackendLink::.ctor(Frontend_interfaz_Multimodal_HMI.Services.WsClient,Frontend_interfaz_Multimodal_HMI.Services.INavigationService)": {
+          "Lines": {
+            "11": 22,
+            "12": 22,
+            "13": 22,
+            "14": 22,
+            "15": 22,
+            "16": 22,
+            "17": 22
+          },
+          "Branches": []
+        },
+        "System.Void Frontend_interfaz_Multimodal_HMI.Services.BackendLink::<OnConnected>b__4_0()": {
+          "Lines": {},
+          "Branches": [
+            {
+              "Line": 25,
+              "Offset": 20,
+              "EndOffset": 22,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 25,
+              "Offset": 20,
+              "EndOffset": 33,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            },
+            {
+              "Line": 25,
+              "Offset": 36,
+              "EndOffset": 38,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 25,
+              "Offset": 36,
+              "EndOffset": 72,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 0
+            }
+          ]
+        }
+      }
+    },
+    "C:\\UDLA Noveno Semstre\\TITA\\Interfaz multi modal\\Front\\Frontend-interfaz-Multimodal-HMI\\Services\\CatalogStore.cs": {
+      "Frontend_interfaz_Multimodal_HMI.Services.CatalogChangedMessage": {
+        "Frontend_interfaz_Multimodal_HMI.Models.CatalogUpdatePayload Frontend_interfaz_Multimodal_HMI.Services.CatalogChangedMessage::get_Snapshot()": {
+          "Lines": {
+            "11": 29
+          },
+          "Branches": []
+        }
+      },
+      "Frontend_interfaz_Multimodal_HMI.Services.CatalogStore": {
+        "Frontend_interfaz_Multimodal_HMI.Models.CatalogUpdatePayload Frontend_interfaz_Multimodal_HMI.Services.CatalogStore::get_Current()": {
+          "Lines": {
+            "16": 7
+          },
+          "Branches": []
+        },
+        "System.Collections.Generic.IReadOnlyList`1<Frontend_interfaz_Multimodal_HMI.Models.CobotMenuItem> Frontend_interfaz_Multimodal_HMI.Services.CatalogStore::get_Items()": {
+          "Lines": {
+            "19": 48
+          },
+          "Branches": [
+            {
+              "Line": 19,
+              "Offset": 10,
+              "EndOffset": 12,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 35
+            },
+            {
+              "Line": 19,
+              "Offset": 10,
+              "EndOffset": 21,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 13
+            }
+          ]
+        },
+        "System.Void Frontend_interfaz_Multimodal_HMI.Services.CatalogStore::Update(Frontend_interfaz_Multimodal_HMI.Models.CatalogUpdatePayload)": {
+          "Lines": {
+            "22": 22,
+            "23": 22,
+            "24": 22,
+            "25": 22,
+            "26": 22
+          },
+          "Branches": []
+        }
+      }
+    },
+    "C:\\UDLA Noveno Semstre\\TITA\\Interfaz multi modal\\Front\\Frontend-interfaz-Multimodal-HMI\\Services\\NavigationService.cs": {
+      "Frontend_interfaz_Multimodal_HMI.Services.NavigationService": {
+        "System.Nullable`1<Frontend_interfaz_Multimodal_HMI.Models.Screen> Frontend_interfaz_Multimodal_HMI.Services.NavigationService::get_CurrentScreen()": {
+          "Lines": {
+            "27": 188
+          },
+          "Branches": []
+        },
+        "System.Void Frontend_interfaz_Multimodal_HMI.Services.NavigationService::NavigateTo()": {
+          "Lines": {
+            "33": 6,
+            "34": 18,
+            "35": 6,
+            "36": 3,
+            "38": 3,
+            "39": 2,
+            "40": 2,
+            "42": 3,
+            "43": 4
+          },
+          "Branches": [
+            {
+              "Line": 34,
+              "Offset": 12,
+              "EndOffset": 14,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 2
+            },
+            {
+              "Line": 34,
+              "Offset": 12,
+              "EndOffset": 37,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 6
+            },
+            {
+              "Line": 35,
+              "Offset": 55,
+              "EndOffset": 57,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 3
+            },
+            {
+              "Line": 35,
+              "Offset": 55,
+              "EndOffset": 99,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 3
+            }
+          ]
+        },
+        "System.Void Frontend_interfaz_Multimodal_HMI.Services.NavigationService::NavigateTo(System.String)": {
+          "Lines": {
+            "46": 62,
+            "47": 62,
+            "48": 54,
+            "50": 8,
+            "51": 62
+          },
+          "Branches": [
+            {
+              "Line": 47,
+              "Offset": 10,
+              "EndOffset": 12,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 55
+            },
+            {
+              "Line": 47,
+              "Offset": 10,
+              "EndOffset": 20,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 7
+            },
+            {
+              "Line": 47,
+              "Offset": 23,
+              "EndOffset": 25,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 54
+            },
+            {
+              "Line": 47,
+              "Offset": 23,
+              "EndOffset": 37,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 8
+            }
+          ]
+        },
+        "System.Void Frontend_interfaz_Multimodal_HMI.Services.NavigationService::NavigateTo(Frontend_interfaz_Multimodal_HMI.Models.Screen,Frontend_interfaz_Multimodal_HMI.Models.StateSource,System.String)": {
+          "Lines": {
+            "55": 86,
+            "56": 86,
+            "57": 1,
+            "58": 1,
+            "59": 1,
+            "62": 85,
+            "63": 79,
+            "65": 83,
+            "66": 83,
+            "67": 84
+          },
+          "Branches": [
+            {
+              "Line": 56,
+              "Offset": 19,
+              "EndOffset": 21,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 1
+            },
+            {
+              "Line": 56,
+              "Offset": 19,
+              "EndOffset": 69,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 85
+            },
+            {
+              "Line": 62,
+              "Offset": 104,
+              "EndOffset": 106,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 79
+            },
+            {
+              "Line": 62,
+              "Offset": 104,
+              "EndOffset": 130,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 83
+            },
+            {
+              "Line": 66,
+              "Offset": 150,
+              "EndOffset": 152,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 44
+            },
+            {
+              "Line": 66,
+              "Offset": 150,
+              "EndOffset": 155,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 39
+            }
+          ]
+        },
+        "System.Void Frontend_interfaz_Multimodal_HMI.Services.NavigationService::.ctor(System.IServiceProvider)": {
+          "Lines": {
+            "21": 118
+          },
+          "Branches": []
+        },
+        "System.Void Frontend_interfaz_Multimodal_HMI.Services.NavigationService::.cctor()": {
+          "Lines": {
+            "13": 1,
+            "14": 1,
+            "15": 1,
+            "16": 1,
+            "17": 1
+          },
+          "Branches": []
+        }
+      }
+    },
+    "C:\\UDLA Noveno Semstre\\TITA\\Interfaz multi modal\\Front\\Frontend-interfaz-Multimodal-HMI\\Services\\WsClient.cs": {
+      "Frontend_interfaz_Multimodal_HMI.Services.WsClient": {
+        "System.Boolean Frontend_interfaz_Multimodal_HMI.Services.WsClient::get_IsConnected()": {
+          "Lines": {
+            "24": 80
+          },
+          "Branches": [
+            {
+              "Line": 24,
+              "Offset": 9,
+              "EndOffset": 11,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 46
+            },
+            {
+              "Line": 24,
+              "Offset": 9,
+              "EndOffset": 15,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 34
+            }
+          ]
+        },
+        "System.Void Frontend_interfaz_Multimodal_HMI.Services.WsClient::HandleMessage(System.String)": {
+          "Lines": {
+            "91": 20,
+            "93": 20,
+            "94": 20,
+            "95": 19,
+            "98": 18,
+            "99": 16,
+            "100": 14,
+            "102": 1,
+            "103": 1,
+            "105": 15,
+            "106": 5,
+            "107": 5,
+            "108": 5,
+            "109": 5,
+            "110": 20
+          },
+          "Branches": [
+            {
+              "Line": 95,
+              "Offset": 34,
+              "EndOffset": 38,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 18
+            },
+            {
+              "Line": 99,
+              "Offset": 62,
+              "EndOffset": 64,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
+            },
+            {
+              "Line": 99,
+              "Offset": 62,
+              "EndOffset": 67,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 16
+            },
+            {
+              "Line": 95,
+              "Offset": 34,
+              "EndOffset": 76,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 1
+            }
+          ]
+        },
+        "System.Void Frontend_interfaz_Multimodal_HMI.Services.WsClient::.ctor(System.Uri)": {
+          "Lines": {
+            "16": 55,
+            "22": 110
+          },
+          "Branches": []
+        }
+      },
+      "Frontend_interfaz_Multimodal_HMI.Services.WsClient/<ReceiveLoopAsync>d__13": {
+        "System.Void Frontend_interfaz_Multimodal_HMI.Services.WsClient/<ReceiveLoopAsync>d__13::MoveNext()": {
+          "Lines": {
+            "67": 48,
+            "68": 48,
+            "69": 48,
+            "71": 68,
+            "72": 68,
+            "73": 68,
+            "76": 73,
+            "77": 73,
+            "78": 27,
+            "79": 2,
+            "80": 2,
+            "81": 2,
+            "83": 25,
+            "84": 50,
+            "86": 20,
+            "87": 20,
+            "88": 2
+          },
+          "Branches": [
+            {
+              "Line": 71,
+              "Offset": 511,
+              "EndOffset": 67,
+              "Path": 1,
+              "Ordinal": 7,
+              "Hits": 68
+            },
+            {
+              "Line": 84,
+              "Offset": 417,
+              "EndOffset": 82,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 73
+            },
+            {
+              "Line": 78,
+              "Offset": 241,
+              "EndOffset": 243,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 2
+            },
+            {
+              "Line": 78,
+              "Offset": 241,
+              "EndOffset": 368,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 25
+            },
+            {
+              "Line": 84,
+              "Offset": 417,
+              "EndOffset": 422,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 20
+            },
+            {
+              "Line": 71,
+              "Offset": 488,
+              "EndOffset": 490,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 68
+            },
+            {
+              "Line": 71,
+              "Offset": 488,
+              "EndOffset": 506,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 0
+            },
+            {
+              "Line": 71,
+              "Offset": 511,
+              "EndOffset": 516,
+              "Path": 0,
+              "Ordinal": 6,
+              "Hits": 0
+            }
+          ]
+        }
+      },
+      "Frontend_interfaz_Multimodal_HMI.Services.WsClient/<RunAsync>d__12": {
+        "System.Void Frontend_interfaz_Multimodal_HMI.Services.WsClient/<RunAsync>d__12::MoveNext()": {
+          "Lines": {
+            "27": 48,
+            "28": 48,
+            "30": 48,
+            "31": 50,
+            "32": 49,
+            "33": 49,
+            "34": 49,
+            "36": 49,
+            "37": 49,
+            "38": 48,
+            "39": 48,
+            "40": 48,
+            "41": 48,
+            "42": 48,
+            "43": 2,
+            "44": 46,
+            "45": 46,
+            "46": 46,
+            "48": 1,
+            "49": 1,
+            "50": 1,
+            "51": 1,
+            "53": 49,
+            "54": 49,
+            "55": 49,
+            "57": 3,
+            "58": 3,
+            "59": 3,
+            "60": 3,
+            "61": 2,
+            "62": 47,
+            "63": 3,
+            "64": 48
+          },
+          "Branches": [
+            {
+              "Line": 31,
+              "Offset": 880,
+              "EndOffset": 38,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 49
+            },
+            {
+              "Line": 41,
+              "Offset": 325,
+              "EndOffset": 327,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 43
+            },
+            {
+              "Line": 41,
+              "Offset": 325,
+              "EndOffset": 330,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 5
+            },
+            {
+              "Line": 31,
+              "Offset": 880,
+              "EndOffset": 885,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 47
+            }
+          ]
+        }
+      },
+      "Frontend_interfaz_Multimodal_HMI.Services.WsClient/<SendAsync>d__15`1": {
+        "System.Void Frontend_interfaz_Multimodal_HMI.Services.WsClient/<SendAsync>d__15`1::MoveNext()": {
+          "Lines": {
+            "114": 62,
+            "115": 62,
+            "116": 69,
+            "118": 55,
+            "119": 55,
+            "121": 55,
+            "123": 54,
+            "124": 54,
+            "125": 53,
+            "127": 1,
+            "128": 1,
+            "129": 1,
+            "130": 1,
+            "132": 162,
+            "133": 61
+          },
+          "Branches": [
+            {
+              "Line": 116,
+              "Offset": 54,
+              "EndOffset": 56,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 55
+            },
+            {
+              "Line": 116,
+              "Offset": 54,
+              "EndOffset": 72,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 7
+            },
+            {
+              "Line": 116,
+              "Offset": 78,
+              "EndOffset": 80,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 7
+            },
+            {
+              "Line": 116,
+              "Offset": 78,
+              "EndOffset": 87,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 55
+            }
+          ]
+        }
+      }
+    },
+    "C:\\UDLA Noveno Semstre\\TITA\\Interfaz multi modal\\Front\\Frontend-interfaz-Multimodal-HMI\\Models\\CatalogModels.cs": {
+      "Frontend_interfaz_Multimodal_HMI.Models.CobotMenuItem": {
+        "System.String Frontend_interfaz_Multimodal_HMI.Models.CobotMenuItem::get_NombreItem()": {
+          "Lines": {
+            "9": 955
+          },
+          "Branches": []
+        },
+        "System.Decimal Frontend_interfaz_Multimodal_HMI.Models.CobotMenuItem::get_PrecioItem()": {
+          "Lines": {
+            "10": 485
+          },
+          "Branches": []
+        },
+        "System.Boolean Frontend_interfaz_Multimodal_HMI.Models.CobotMenuItem::get_Estado()": {
+          "Lines": {
+            "11": 461
+          },
+          "Branches": []
+        },
+        "System.String Frontend_interfaz_Multimodal_HMI.Models.CobotMenuItem::get_Ingredientes()": {
+          "Lines": {
+            "12": 462
+          },
+          "Branches": []
+        },
+        "System.Nullable`1<System.Int32> Frontend_interfaz_Multimodal_HMI.Models.CobotMenuItem::get_CodigoModbus()": {
+          "Lines": {
+            "13": 462
+          },
+          "Branches": []
+        },
+        "System.String Frontend_interfaz_Multimodal_HMI.Models.CobotMenuItem::get_Imagen()": {
+          "Lines": {
+            "14": 33
+          },
+          "Branches": []
+        }
+      },
+      "Frontend_interfaz_Multimodal_HMI.Models.CobotCatalogResponse": {
+        "System.Collections.Generic.List`1<Frontend_interfaz_Multimodal_HMI.Models.CobotMenuItem> Frontend_interfaz_Multimodal_HMI.Models.CobotCatalogResponse::get_Items()": {
+          "Lines": {
+            "19": 166
+          },
+          "Branches": []
+        },
+        "System.Int32 Frontend_interfaz_Multimodal_HMI.Models.CobotCatalogResponse::get_Total()": {
+          "Lines": {
+            "20": 42
+          },
+          "Branches": []
+        }
+      },
+      "Frontend_interfaz_Multimodal_HMI.Models.CatalogUpdatePayload": {
+        "System.String Frontend_interfaz_Multimodal_HMI.Models.CatalogUpdatePayload::get_UltimaActualizacion()": {
+          "Lines": {
+            "25": 116
+          },
+          "Branches": []
+        },
+        "Frontend_interfaz_Multimodal_HMI.Models.CobotCatalogResponse Frontend_interfaz_Multimodal_HMI.Models.CatalogUpdatePayload::get_Catalogo()": {
+          "Lines": {
+            "26": 127
+          },
+          "Branches": []
+        }
+      }
+    },
+    "C:\\UDLA Noveno Semstre\\TITA\\Interfaz multi modal\\Front\\Frontend-interfaz-Multimodal-HMI\\Models\\WsModels.cs": {
+      "Frontend_interfaz_Multimodal_HMI.Models.WsJson": {
+        "System.Void Frontend_interfaz_Multimodal_HMI.Models.WsJson::.cctor()": {
+          "Lines": {
+            "11": 1,
+            "12": 1,
+            "13": 1,
+            "14": 1,
+            "15": 1,
+            "16": 1
+          },
+          "Branches": []
+        }
+      },
+      "Frontend_interfaz_Multimodal_HMI.Models.WsEnvelope`1": {
+        "System.String Frontend_interfaz_Multimodal_HMI.Models.WsEnvelope`1::get_Id()": {
+          "Lines": {
+            "31": 126
+          },
+          "Branches": []
+        },
+        "System.DateTimeOffset Frontend_interfaz_Multimodal_HMI.Models.WsEnvelope`1::get_Ts()": {
+          "Lines": {
+            "32": 124
+          },
+          "Branches": []
+        },
+        "System.String Frontend_interfaz_Multimodal_HMI.Models.WsEnvelope`1::get_Type()": {
+          "Lines": {
+            "33": 122
+          },
+          "Branches": []
+        },
+        "T Frontend_interfaz_Multimodal_HMI.Models.WsEnvelope`1::get_Payload()": {
+          "Lines": {
+            "34": 122
+          },
+          "Branches": []
+        }
+      },
+      "Frontend_interfaz_Multimodal_HMI.Models.StatePayload": {
+        "Frontend_interfaz_Multimodal_HMI.Models.Screen Frontend_interfaz_Multimodal_HMI.Models.StatePayload::get_Screen()": {
+          "Lines": {
+            "37": 131
+          },
+          "Branches": []
+        }
+      },
+      "Frontend_interfaz_Multimodal_HMI.Models.WsEnvelope": {
+        "System.String Frontend_interfaz_Multimodal_HMI.Models.WsEnvelope::get_Id()": {
+          "Lines": {
+            "40": 66
+          },
+          "Branches": []
+        },
+        "System.DateTimeOffset Frontend_interfaz_Multimodal_HMI.Models.WsEnvelope::get_Ts()": {
+          "Lines": {
+            "41": 38
+          },
+          "Branches": []
+        },
+        "System.String Frontend_interfaz_Multimodal_HMI.Models.WsEnvelope::get_Type()": {
+          "Lines": {
+            "42": 87
+          },
+          "Branches": []
+        },
+        "System.Text.Json.JsonElement Frontend_interfaz_Multimodal_HMI.Models.WsEnvelope::get_Payload()": {
+          "Lines": {
+            "43": 56
+          },
+          "Branches": []
+        }
+      }
+    }
+  }
+}

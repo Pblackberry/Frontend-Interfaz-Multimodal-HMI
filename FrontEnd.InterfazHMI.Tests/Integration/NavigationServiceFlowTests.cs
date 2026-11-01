@@ -5,7 +5,6 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace FrontEnd.InterfazHMI.Tests.Integration;
 
-// MenuViewModel se registra en el messenger estático.
 [Collection(MessengerCollection.Name)]
 public class NavigationFlowTests
 {
@@ -31,7 +30,7 @@ public class NavigationFlowTests
     }
 
     [Fact]
-    public void GoHome_FromWelcome_ShowsWelcomeAgain()
+    public void GoHome_FromWelcome_KeepsTheSameWelcomeViewModel()
     {
         using var provider = BuildProvider();
         var main = provider.GetRequiredService<MainViewModel>();
@@ -40,7 +39,21 @@ public class NavigationFlowTests
         main.GoHomeCommand.Execute(null);
 
         Assert.IsType<WelcomeViewModel>(main.Navigation.Current);
-        Assert.NotSame(firstWelcome, main.Navigation.Current); // WelcomeViewModel es transient
+        Assert.Same(firstWelcome, main.Navigation.Current);
+    }
+
+    [Fact]
+    public void GoHome_FromMenu_CreatesANewWelcomeViewModel()
+    {
+        using var provider = BuildProvider();
+        var main = provider.GetRequiredService<MainViewModel>();
+        var firstWelcome = main.Navigation.Current;
+        main.Navigation.NavigateTo("menu");
+
+        main.GoHomeCommand.Execute(null);
+
+        Assert.IsType<WelcomeViewModel>(main.Navigation.Current);
+        Assert.NotSame(firstWelcome, main.Navigation.Current);
     }
 
     [Fact]
@@ -105,7 +118,7 @@ public class NavigationFlowTests
         main.GoHomeCommand.Execute(null);
         main.Navigation.NavigateTo("menu");
 
-        Assert.NotSame(first, main.Navigation.Current);   // MenuViewModel es transient
+        Assert.NotSame(first, main.Navigation.Current);
     }
 
     [Fact]

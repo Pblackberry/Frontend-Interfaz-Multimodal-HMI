@@ -10,7 +10,8 @@ public sealed class CobotMenuItem
     public decimal PrecioItem { get; set; }
     public bool Estado { get; set; }
     public string? Ingredientes { get; set; }
-    public string? CodigoModbus { get; set; }
+    public int? CodigoModbus { get; set; }
+    public string? Imagen { get; set; }
 }
 
 public sealed class CobotCatalogResponse

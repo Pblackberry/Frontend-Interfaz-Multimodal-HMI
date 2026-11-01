@@ -8,7 +8,7 @@ public class CatalogModelsTests
     private const string _backendMessage =
         "{'id':'a1','ts':'2026-10-22T10:00:00Z','type':'catalog_update','payload':{" +
         "'ultima_actualizacion':'2026-10-22T09:59:00','catalogo':{'items':[" +
-        "{'nombre_item':'Mojito','precio_item':'5.50','estado':true,'ingredientes':'Ron, menta','codigo_modbus':'0x01'}," +
+        "{'nombre_item':'Mojito','precio_item':'5.50','estado':true,'ingredientes':'Ron, menta','codigo_modbus':'1'}," +
         "{'nombre_item':'Piña colada','precio_item':'6.25','estado':true,'ingredientes':null,'codigo_modbus':null,'campo_nuevo':1}" +
         "],'total':2}}}";
 
@@ -74,7 +74,7 @@ public class CatalogModelsTests
         Assert.Equal(5.50m, item.PrecioItem);   // el backend envía el Decimal como string
         Assert.True(item.Estado);
         Assert.Equal("Ron, menta", item.Ingredientes);
-        Assert.Equal("0x01", item.CodigoModbus);
+        Assert.Equal(1, item.CodigoModbus);
     }
 
     [Fact]
