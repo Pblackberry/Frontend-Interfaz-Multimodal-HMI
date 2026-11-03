@@ -4,37 +4,52 @@
       "Frontend_interfaz_Multimodal_HMI.ViewModels.DrinkCardViewModel": {
         "Frontend_interfaz_Multimodal_HMI.Models.CobotMenuItem Frontend_interfaz_Multimodal_HMI.ViewModels.DrinkCardViewModel::get_Item()": {
           "Lines": {
-            "20": 3
+            "21": 3
           },
           "Branches": []
         },
         "System.String Frontend_interfaz_Multimodal_HMI.ViewModels.DrinkCardViewModel::get_Name()": {
           "Lines": {
-            "21": 9
+            "22": 9
           },
           "Branches": []
         },
         "System.String Frontend_interfaz_Multimodal_HMI.ViewModels.DrinkCardViewModel::get_PriceText()": {
           "Lines": {
-            "22": 9
+            "23": 9
           },
           "Branches": []
         },
         "System.String Frontend_interfaz_Multimodal_HMI.ViewModels.DrinkCardViewModel::get_ImageUrl()": {
           "Lines": {
-            "23": 1
+            "24": 37
           },
           "Branches": []
         },
-        "System.Void Frontend_interfaz_Multimodal_HMI.ViewModels.DrinkCardViewModel::.ctor(Frontend_interfaz_Multimodal_HMI.Models.CobotMenuItem)": {
+        "System.Boolean Frontend_interfaz_Multimodal_HMI.ViewModels.DrinkCardViewModel::get_HasImage()": {
           "Lines": {
-            "11": 22,
-            "12": 22,
-            "13": 22,
-            "14": 22,
-            "16": 22,
-            "17": 22,
-            "18": 22
+            "30": 5
+          },
+          "Branches": []
+        },
+        "System.Void Frontend_interfaz_Multimodal_HMI.ViewModels.DrinkCardViewModel::.ctor(Frontend_interfaz_Multimodal_HMI.Models.CobotMenuItem,Frontend_interfaz_Multimodal_HMI.Services.IImageLoader)": {
+          "Lines": {
+            "12": 35,
+            "13": 35,
+            "14": 35,
+            "15": 35,
+            "16": 35,
+            "17": 35,
+            "18": 35,
+            "19": 35
+          },
+          "Branches": []
+        }
+      },
+      "Frontend_interfaz_Multimodal_HMI.ViewModels.DrinkCardViewModel/<LoadImageAsync>d__16": {
+        "System.Void Frontend_interfaz_Multimodal_HMI.ViewModels.DrinkCardViewModel/<LoadImageAsync>d__16::MoveNext()": {
+          "Lines": {
+            "33": 35
           },
           "Branches": []
         }
@@ -70,25 +85,25 @@
       "Frontend_interfaz_Multimodal_HMI.ViewModels.MenuViewModel": {
         "System.Collections.ObjectModel.ObservableCollection`1<Frontend_interfaz_Multimodal_HMI.ViewModels.DrinkCardViewModel> Frontend_interfaz_Multimodal_HMI.ViewModels.MenuViewModel::get_Items()": {
           "Lines": {
-            "17": 113
+            "18": 122
           },
           "Branches": []
         },
         "System.Void Frontend_interfaz_Multimodal_HMI.ViewModels.MenuViewModel::Receive(Frontend_interfaz_Multimodal_HMI.Services.CatalogChangedMessage)": {
           "Lines": {
-            "26": 281
+            "28": 177
           },
           "Branches": [
             {
-              "Line": 26,
+              "Line": 28,
               "Offset": 26,
               "EndOffset": 28,
               "Path": 0,
               "Ordinal": 0,
-              "Hits": 281
+              "Hits": 177
             },
             {
-              "Line": 26,
+              "Line": 28,
               "Offset": 26,
               "EndOffset": 31,
               "Path": 1,
@@ -99,45 +114,45 @@
         },
         "System.Void Frontend_interfaz_Multimodal_HMI.ViewModels.MenuViewModel::Load(System.Collections.Generic.IEnumerable`1<Frontend_interfaz_Multimodal_HMI.Models.CobotMenuItem>)": {
           "Lines": {
-            "29": 43,
-            "30": 43,
-            "31": 155,
-            "32": 13,
-            "33": 13,
-            "34": 13,
-            "35": 43
+            "31": 45,
+            "32": 45,
+            "33": 169,
+            "34": 17,
+            "35": 17,
+            "36": 17,
+            "37": 45
           },
           "Branches": [
             {
-              "Line": 31,
-              "Offset": 56,
+              "Line": 33,
+              "Offset": 62,
               "EndOffset": 23,
               "Path": 1,
               "Ordinal": 1,
-              "Hits": 13
+              "Hits": 17
             },
             {
-              "Line": 31,
-              "Offset": 56,
-              "EndOffset": 58,
+              "Line": 33,
+              "Offset": 62,
+              "EndOffset": 64,
               "Path": 0,
               "Ordinal": 0,
-              "Hits": 43
+              "Hits": 45
             }
           ]
         },
         "System.Void Frontend_interfaz_Multimodal_HMI.ViewModels.MenuViewModel::SelectDrink(Frontend_interfaz_Multimodal_HMI.ViewModels.DrinkCardViewModel)": {
           "Lines": {
-            "39": 2,
-            "40": 2,
-            "41": 1,
-            "42": 1,
-            "45": 1,
-            "46": 2
+            "41": 2,
+            "42": 2,
+            "43": 1,
+            "44": 1,
+            "46": 1,
+            "47": 2
           },
           "Branches": [
             {
-              "Line": 40,
+              "Line": 42,
               "Offset": 7,
               "EndOffset": 9,
               "Path": 0,
@@ -145,7 +160,7 @@
               "Hits": 1
             },
             {
-              "Line": 40,
+              "Line": 42,
               "Offset": 7,
               "EndOffset": 12,
               "Path": 1,
@@ -154,13 +169,14 @@
             }
           ]
         },
-        "System.Void Frontend_interfaz_Multimodal_HMI.ViewModels.MenuViewModel::.ctor(Frontend_interfaz_Multimodal_HMI.Services.CatalogStore)": {
+        "System.Void Frontend_interfaz_Multimodal_HMI.ViewModels.MenuViewModel::.ctor(Frontend_interfaz_Multimodal_HMI.Services.CatalogStore,Frontend_interfaz_Multimodal_HMI.Services.IImageLoader)": {
           "Lines": {
-            "19": 43,
-            "20": 43,
-            "21": 43,
-            "22": 43,
-            "23": 43
+            "20": 45,
+            "21": 45,
+            "22": 45,
+            "23": 45,
+            "24": 45,
+            "25": 45
           },
           "Branches": []
         }
@@ -305,7 +321,7 @@
       "Frontend_interfaz_Multimodal_HMI.Services.CatalogChangedMessage": {
         "Frontend_interfaz_Multimodal_HMI.Models.CatalogUpdatePayload Frontend_interfaz_Multimodal_HMI.Services.CatalogChangedMessage::get_Snapshot()": {
           "Lines": {
-            "11": 29
+            "11": 31
           },
           "Branches": []
         }
@@ -319,7 +335,7 @@
         },
         "System.Collections.Generic.IReadOnlyList`1<Frontend_interfaz_Multimodal_HMI.Models.CobotMenuItem> Frontend_interfaz_Multimodal_HMI.Services.CatalogStore::get_Items()": {
           "Lines": {
-            "19": 48
+            "19": 50
           },
           "Branches": [
             {
@@ -336,19 +352,279 @@
               "EndOffset": 21,
               "Path": 1,
               "Ordinal": 1,
-              "Hits": 13
+              "Hits": 15
             }
           ]
         },
         "System.Void Frontend_interfaz_Multimodal_HMI.Services.CatalogStore::Update(Frontend_interfaz_Multimodal_HMI.Models.CatalogUpdatePayload)": {
           "Lines": {
-            "22": 22,
-            "23": 22,
-            "24": 22,
-            "25": 22,
-            "26": 22
+            "22": 24,
+            "23": 24,
+            "24": 24,
+            "25": 24,
+            "26": 24
           },
           "Branches": []
+        }
+      }
+    },
+    "C:\\UDLA Noveno Semstre\\TITA\\Interfaz multi modal\\Front\\Frontend-interfaz-Multimodal-HMI\\Services\\ImageLoader.cs": {
+      "Frontend_interfaz_Multimodal_HMI.Services.ImageLoader": {
+        "System.Windows.Media.ImageSource Frontend_interfaz_Multimodal_HMI.Services.ImageLoader::Decode(System.Byte[])": {
+          "Lines": {
+            "88": 13,
+            "89": 13,
+            "90": 13,
+            "91": 13,
+            "92": 13,
+            "93": 13,
+            "94": 13,
+            "95": 13,
+            "96": 12,
+            "97": 12,
+            "98": 12
+          },
+          "Branches": []
+        },
+        "System.Void Frontend_interfaz_Multimodal_HMI.Services.ImageLoader::.ctor(System.Net.Http.HttpClient)": {
+          "Lines": {
+            "24": 23,
+            "25": 23,
+            "27": 46
+          },
+          "Branches": []
+        }
+      },
+      "Frontend_interfaz_Multimodal_HMI.Services.ImageLoader/<>c__DisplayClass6_0": {
+        "System.Threading.Tasks.Task`1<System.Windows.Media.ImageSource> Frontend_interfaz_Multimodal_HMI.Services.ImageLoader/<>c__DisplayClass6_0::<LoadAsync>b__0(System.String)": {
+          "Lines": {
+            "40": 59
+          },
+          "Branches": []
+        }
+      },
+      "Frontend_interfaz_Multimodal_HMI.Services.ImageLoader/<DownloadAsync>d__7": {
+        "System.Void Frontend_interfaz_Multimodal_HMI.Services.ImageLoader/<DownloadAsync>d__7::MoveNext()": {
+          "Lines": {
+            "48": 27,
+            "49": 27,
+            "51": 27,
+            "52": 27,
+            "53": 27,
+            "54": 25,
+            "56": 24,
+            "57": 2,
+            "59": 20,
+            "60": 13,
+            "62": 15,
+            "63": 15,
+            "64": 15,
+            "65": 15,
+            "68": 27,
+            "69": 27,
+            "70": 27,
+            "71": 27
+          },
+          "Branches": [
+            {
+              "Line": 48,
+              "Offset": 16,
+              "EndOffset": 24,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 27
+            },
+            {
+              "Line": 48,
+              "Offset": 16,
+              "EndOffset": 141,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 32
+            },
+            {
+              "Line": 56,
+              "Offset": 391,
+              "EndOffset": 393,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 2
+            },
+            {
+              "Line": 56,
+              "Offset": 391,
+              "EndOffset": 405,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 20
+            }
+          ]
+        }
+      },
+      "Frontend_interfaz_Multimodal_HMI.Services.ImageLoader/<LoadAsync>d__6": {
+        "System.Void Frontend_interfaz_Multimodal_HMI.Services.ImageLoader/<LoadAsync>d__6::MoveNext()": {
+          "Lines": {
+            "30": 39,
+            "31": 42,
+            "33": 36,
+            "34": 36,
+            "35": 4,
+            "36": 4,
+            "37": 4,
+            "42": 32,
+            "43": 15,
+            "44": 32,
+            "45": 39
+          },
+          "Branches": [
+            {
+              "Line": 31,
+              "Offset": 59,
+              "EndOffset": 61,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 3
+            },
+            {
+              "Line": 31,
+              "Offset": 59,
+              "EndOffset": 68,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 36
+            },
+            {
+              "Line": 33,
+              "Offset": 91,
+              "EndOffset": 93,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 34
+            },
+            {
+              "Line": 33,
+              "Offset": 119,
+              "EndOffset": 121,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 33
+            },
+            {
+              "Line": 33,
+              "Offset": 119,
+              "EndOffset": 149,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 1
+            },
+            {
+              "Line": 33,
+              "Offset": 91,
+              "EndOffset": 152,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 2
+            },
+            {
+              "Line": 33,
+              "Offset": 155,
+              "EndOffset": 157,
+              "Path": 0,
+              "Ordinal": 6,
+              "Hits": 4
+            },
+            {
+              "Line": 33,
+              "Offset": 155,
+              "EndOffset": 187,
+              "Path": 1,
+              "Ordinal": 7,
+              "Hits": 32
+            },
+            {
+              "Line": 42,
+              "Offset": 367,
+              "EndOffset": 369,
+              "Path": 0,
+              "Ordinal": 8,
+              "Hits": 15
+            },
+            {
+              "Line": 42,
+              "Offset": 367,
+              "EndOffset": 394,
+              "Path": 1,
+              "Ordinal": 9,
+              "Hits": 32
+            }
+          ]
+        }
+      },
+      "Frontend_interfaz_Multimodal_HMI.Services.ImageLoader/<ReadLimitedAsync>d__8": {
+        "System.Void Frontend_interfaz_Multimodal_HMI.Services.ImageLoader/<ReadLimitedAsync>d__8::MoveNext()": {
+          "Lines": {
+            "74": 20,
+            "75": 20,
+            "76": 14,
+            "77": 14,
+            "79": 154,
+            "80": 141,
+            "81": 141,
+            "82": 142,
+            "83": 140,
+            "84": 13,
+            "85": 13
+          },
+          "Branches": [
+            {
+              "Line": 79,
+              "Offset": 476,
+              "EndOffset": 244,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 141
+            },
+            {
+              "Line": 82,
+              "Offset": 293,
+              "EndOffset": 295,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 1
+            },
+            {
+              "Line": 82,
+              "Offset": 293,
+              "EndOffset": 306,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 140
+            },
+            {
+              "Line": 79,
+              "Offset": 476,
+              "EndOffset": 481,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 13
+            },
+            {
+              "Line": 84,
+              "Offset": 552,
+              "EndOffset": 554,
+              "Path": 0,
+              "Ordinal": 4,
+              "Hits": 14
+            },
+            {
+              "Line": 84,
+              "Offset": 552,
+              "EndOffset": 663,
+              "Path": 1,
+              "Ordinal": 5,
+              "Hits": 14
+            }
+          ]
         }
       }
     },
@@ -572,10 +848,10 @@
             "99": 20,
             "100": 18,
             "101": 16,
-            "103": 14,
-            "104": 10,
-            "106": 0,
-            "107": 0,
+            "103": 13,
+            "104": 9,
+            "106": 1,
+            "107": 1,
             "109": 26,
             "110": 9,
             "111": 9,
@@ -622,7 +898,7 @@
               "EndOffset": 89,
               "Path": 1,
               "Ordinal": 3,
-              "Hits": 14
+              "Hits": 13
             },
             {
               "Line": 103,
@@ -630,7 +906,7 @@
               "EndOffset": 98,
               "Path": 0,
               "Ordinal": 6,
-              "Hits": 2
+              "Hits": 1
             },
             {
               "Line": 103,
@@ -646,7 +922,7 @@
               "EndOffset": 131,
               "Path": 0,
               "Ordinal": 2,
-              "Hits": 0
+              "Hits": 1
             }
           ]
         },
@@ -665,10 +941,10 @@
             "69": 57,
             "70": 57,
             "72": 92,
-            "73": 92,
-            "74": 92,
-            "77": 97,
-            "78": 97,
+            "73": 90,
+            "74": 90,
+            "77": 95,
+            "78": 95,
             "79": 42,
             "80": 2,
             "81": 2,
@@ -677,7 +953,7 @@
             "85": 80,
             "87": 35,
             "88": 35,
-            "89": 2
+            "89": 4
           },
           "Branches": [
             {
@@ -686,7 +962,7 @@
               "EndOffset": 67,
               "Path": 1,
               "Ordinal": 7,
-              "Hits": 92
+              "Hits": 90
             },
             {
               "Line": 85,
@@ -694,7 +970,7 @@
               "EndOffset": 82,
               "Path": 1,
               "Ordinal": 3,
-              "Hits": 97
+              "Hits": 95
             },
             {
               "Line": 79,
@@ -742,7 +1018,7 @@
               "EndOffset": 516,
               "Path": 0,
               "Ordinal": 6,
-              "Hits": 0
+              "Hits": 2
             }
           ]
         }
@@ -764,24 +1040,24 @@
             "41": 57,
             "42": 57,
             "43": 57,
-            "44": 2,
-            "45": 55,
-            "46": 55,
-            "47": 55,
-            "49": 1,
-            "50": 1,
-            "51": 1,
-            "52": 1,
+            "44": 4,
+            "45": 52,
+            "46": 52,
+            "47": 52,
+            "49": 2,
+            "50": 2,
+            "51": 2,
+            "52": 2,
             "54": 58,
             "55": 58,
             "56": 58,
-            "58": 3,
-            "59": 3,
-            "60": 3,
-            "61": 3,
+            "58": 6,
+            "59": 6,
+            "60": 6,
+            "61": 6,
             "62": 2,
-            "63": 56,
-            "64": 3,
+            "63": 53,
+            "64": 12,
             "65": 57
           },
           "Branches": [
@@ -815,7 +1091,7 @@
               "EndOffset": 885,
               "Path": 0,
               "Ordinal": 2,
-              "Hits": 56
+              "Hits": 53
             }
           ]
         }
@@ -882,37 +1158,37 @@
       "Frontend_interfaz_Multimodal_HMI.Models.CobotMenuItem": {
         "System.String Frontend_interfaz_Multimodal_HMI.Models.CobotMenuItem::get_NombreItem()": {
           "Lines": {
-            "9": 955
+            "9": 994
           },
           "Branches": []
         },
         "System.Decimal Frontend_interfaz_Multimodal_HMI.Models.CobotMenuItem::get_PrecioItem()": {
           "Lines": {
-            "10": 485
+            "10": 511
           },
           "Branches": []
         },
         "System.Boolean Frontend_interfaz_Multimodal_HMI.Models.CobotMenuItem::get_Estado()": {
           "Lines": {
-            "11": 461
+            "11": 474
           },
           "Branches": []
         },
         "System.String Frontend_interfaz_Multimodal_HMI.Models.CobotMenuItem::get_Ingredientes()": {
           "Lines": {
-            "12": 462
+            "12": 475
           },
           "Branches": []
         },
         "System.Nullable`1<System.Int32> Frontend_interfaz_Multimodal_HMI.Models.CobotMenuItem::get_CodigoModbus()": {
           "Lines": {
-            "13": 462
+            "13": 475
           },
           "Branches": []
         },
         "System.String Frontend_interfaz_Multimodal_HMI.Models.CobotMenuItem::get_Imagen()": {
           "Lines": {
-            "14": 33
+            "14": 87
           },
           "Branches": []
         }
@@ -920,13 +1196,13 @@
       "Frontend_interfaz_Multimodal_HMI.Models.CobotCatalogResponse": {
         "System.Collections.Generic.List`1<Frontend_interfaz_Multimodal_HMI.Models.CobotMenuItem> Frontend_interfaz_Multimodal_HMI.Models.CobotCatalogResponse::get_Items()": {
           "Lines": {
-            "19": 172
+            "19": 182
           },
           "Branches": []
         },
         "System.Int32 Frontend_interfaz_Multimodal_HMI.Models.CobotCatalogResponse::get_Total()": {
           "Lines": {
-            "20": 44
+            "20": 46
           },
           "Branches": []
         }
@@ -934,13 +1210,13 @@
       "Frontend_interfaz_Multimodal_HMI.Models.CatalogUpdatePayload": {
         "System.String Frontend_interfaz_Multimodal_HMI.Models.CatalogUpdatePayload::get_UltimaActualizacion()": {
           "Lines": {
-            "25": 122
+            "25": 128
           },
           "Branches": []
         },
         "Frontend_interfaz_Multimodal_HMI.Models.CobotCatalogResponse Frontend_interfaz_Multimodal_HMI.Models.CatalogUpdatePayload::get_Catalogo()": {
           "Lines": {
-            "26": 131
+            "26": 139
           },
           "Branches": []
         }
@@ -1009,7 +1285,7 @@
         },
         "System.String Frontend_interfaz_Multimodal_HMI.Models.WsEnvelope::get_Type()": {
           "Lines": {
-            "43": 134
+            "43": 135
           },
           "Branches": []
         },

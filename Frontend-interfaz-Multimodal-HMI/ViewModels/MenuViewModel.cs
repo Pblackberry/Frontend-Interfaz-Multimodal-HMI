@@ -14,10 +14,12 @@ namespace Frontend_interfaz_Multimodal_HMI.ViewModels;
 
 public partial class MenuViewModel : ObservableRecipient, IRecipient<CatalogChangedMessage>
 {
+    private readonly IImageLoader _images;
     public ObservableCollection<DrinkCardViewModel> Items { get; } = new();
 
-    public MenuViewModel(CatalogStore store)
+    public MenuViewModel(CatalogStore store, IImageLoader images)
     {
+        _images = images;
         Load(store.Items);
         IsActive = true;
     }
@@ -30,7 +32,7 @@ public partial class MenuViewModel : ObservableRecipient, IRecipient<CatalogChan
         Items.Clear();
         foreach (var item in items)
         {
-            Items.Add(new DrinkCardViewModel(item));
+            Items.Add(new DrinkCardViewModel(item, _images));
         }
     }
 
@@ -41,7 +43,6 @@ public partial class MenuViewModel : ObservableRecipient, IRecipient<CatalogChan
         {
             return;
         }
-        // TODO: flujo de pedido (confirmar, enviar al backend, etc.)
         Debug.WriteLine($"[Menu] Bebida seleccionada: {drink.Name}");
     }
 }

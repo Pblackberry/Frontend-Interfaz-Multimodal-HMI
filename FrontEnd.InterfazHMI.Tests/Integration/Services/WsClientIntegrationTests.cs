@@ -141,7 +141,7 @@ public class WsClientIntegrationTests
         var socket = await server.AcceptAsync();
 
         await FakeWsServer.SendTextAsync(socket,
-            "{\"id\":\"1\",\"ts\":\"2026-10-22T10:00:00Z\",\"type\":\"navigate\",\"payload\":{\"screen\":\"menu\"}}");
+            "{\"id\":\"1\",\"ts\":\"2026-10-22T10:00:00Z\",\"type\":\"unknown_type\",\"payload\":{\"screen\":\"menu\"}}");
         await FakeWsServer.SendTextAsync(socket, UpdateJson("f1", "Mojito"));
         var payload = await run.NextUpdateAsync();
 

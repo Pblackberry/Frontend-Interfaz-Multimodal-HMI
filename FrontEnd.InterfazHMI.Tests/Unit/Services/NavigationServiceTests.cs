@@ -4,11 +4,9 @@ using Frontend_interfaz_Multimodal_HMI.ViewModels;
 
 namespace FrontEnd.InterfazHMI.Tests.Unit.Services;
 
-// Crea MenuViewModel, que se registra en el messenger estático.
 [Collection(MessengerCollection.Name)]
 public class NavigationServiceTests : IDisposable
 {
-    /// <summary>IServiceProvider mínimo: devuelve instancias ya creadas y registra qué se pidió.</summary>
     private sealed class FakeServiceProvider : IServiceProvider
     {
         private readonly Dictionary<Type, object> _services = new();
@@ -47,13 +45,12 @@ public class NavigationServiceTests : IDisposable
 
     private MenuViewModel RegisterMenu()
     {
-        var menu = new MenuViewModel(new CatalogStore());
+        var menu = new MenuViewModel(new CatalogStore(), new FakeImageLoader());
         _menus.Add(menu);
         _provider.Add(menu);
         return menu;
     }
 
-    // ---------- estado inicial ----------
 
     [Fact]
     public void NewService_HasNoCurrentScreen()
@@ -61,7 +58,6 @@ public class NavigationServiceTests : IDisposable
         Assert.Null(_sut.Current);
     }
 
-    // ---------- NavigateTo(string) ----------
 
     [Fact]
     public void NavigateTo_Welcome_SetsTheWelcomeViewModel()
@@ -132,7 +128,7 @@ public class NavigationServiceTests : IDisposable
         _sut.NavigateTo("no_existe");
 
         Assert.Same(welcome, _sut.Current);
-        Assert.Empty(_provider.Requested);   // ni siquiera intentó resolver un ViewModel
+        Assert.Empty(_provider.Requested);
     }
 
     [Fact]
@@ -143,7 +139,6 @@ public class NavigationServiceTests : IDisposable
         Assert.Null(_sut.Current);
     }
 
-    // ---------- NavigateTo<T>() ----------
 
     [Fact]
     public void NavigateToGeneric_ResolvesTheViewModelFromTheProvider()
@@ -166,7 +161,6 @@ public class NavigationServiceTests : IDisposable
         Assert.Same(welcome, _sut.Current);
     }
 
-    // ---------- PropertyChanged ----------
 
     [Fact]
     public void NavigateTo_RaisesPropertyChangedForCurrent()

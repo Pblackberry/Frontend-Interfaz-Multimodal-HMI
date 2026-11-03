@@ -87,7 +87,7 @@ public class CatalogSyncFlowTests
         await using var server = new FakeWsServer();
         var store = await SyncOnceAsync(server);
 
-        var menu = new MenuViewModel(store);
+        var menu = new MenuViewModel(store, new FakeImageLoader());
         try
         {
             Assert.Equal(new[] { "Mojito", "Daiquiri" }, menu.Items.Select(c => c.Name));

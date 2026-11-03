@@ -1,3 +1,4 @@
+using System.Windows.Media;
 using CommunityToolkit.Mvvm.Messaging;
 using FrontEnd.InterfazHMI.Tests.Support;
 using Frontend_interfaz_Multimodal_HMI.Models;
@@ -6,7 +7,6 @@ using Frontend_interfaz_Multimodal_HMI.ViewModels;
 
 namespace FrontEnd.InterfazHMI.Tests.Unit.ViewModels;
 
-// MenuViewModel se registra en el messenger estático (IsActive = true).
 [Collection(MessengerCollection.Name)]
 public class MenuViewModelTests : IDisposable
 {
@@ -20,6 +20,8 @@ public class MenuViewModelTests : IDisposable
         }
     }
 
+    private readonly FakeImageLoader _loader = new();
+
     private (MenuViewModel Sut, CatalogStore Store) CreateSut(params CobotMenuItem[] items)
     {
         var store = new CatalogStore();
@@ -28,12 +30,38 @@ public class MenuViewModelTests : IDisposable
             store.Update(TestData.Payload("f1", items));
         }
 
-        var sut = new MenuViewModel(store);
+        var sut = new MenuViewModel(store, _loader);
         _created.Add(sut);
         return (sut, store);
     }
 
-    // ---------- carga inicial ----------
+
+    [Fact]
+    public void Constructor_AsksTheLoaderForEachCardImage_InOrder()
+    {
+        var mojito = TestData.Item("Mojito");
+        mojito.Imagen = "https://cdn.test/mojito.png";
+        var daiquiri = TestData.Item("Daiquiri");
+        daiquiri.Imagen = null;
+
+        CreateSut(mojito, daiquiri);
+
+        Assert.Equal(new string?[] { "https://cdn.test/mojito.png", null }, _loader.Requested);
+    }
+
+    [Fact]
+    public void Cards_ShowTheImageProvidedByTheLoader()
+    {
+        var image = new DrawingImage();
+        var store = new CatalogStore();
+        store.Update(TestData.Payload("f1", TestData.Item("Mojito"), TestData.Item("Daiquiri")));
+
+        var sut = new MenuViewModel(store, FakeImageLoader.Returning(image));
+        _created.Add(sut);
+
+        Assert.All(sut.Items, card => Assert.Same(image, card.Image));
+    }
+
 
     [Fact]
     public void Constructor_WithEmptyStore_HasNoItems()
@@ -65,7 +93,6 @@ public class MenuViewModelTests : IDisposable
         Assert.Equal("$5.50", sut.Items[0].PriceText);
     }
 
-    // ---------- activación en el messenger ----------
 
     [Fact]
     public void Constructor_ActivatesTheViewModelAndRegistersItInTheMessenger()
@@ -86,12 +113,10 @@ public class MenuViewModelTests : IDisposable
         Assert.False(WeakReferenceMessenger.Default.IsRegistered<CatalogChangedMessage>(sut));
     }
 
-    // ---------- Receive ----------
 
     [Fact]
     public void Receive_WithoutAWpfApplication_DoesNotThrowAndKeepsTheItems()
     {
-        // En xUnit no existe Application.Current, así que Receive no llega a refrescar la lista.
         var (sut, _) = CreateSut(TestData.Item("Mojito"));
         var message = new CatalogChangedMessage(TestData.Payload("f2", TestData.Item("Daiquiri")));
 
@@ -112,7 +137,6 @@ public class MenuViewModelTests : IDisposable
         Assert.Null(exception);
     }
 
-    // ---------- SelectDrinkCommand ----------
 
     [Fact]
     public void SelectDrinkCommand_CanAlwaysExecute()
