@@ -23,6 +23,8 @@ internal sealed class FakeNavigationService : INavigationService
 
     public Screen? CurrentScreen { get; set; }
 
+    public List<(Screen Screen, StateSource Source, string? OrderId)> NavigateToCalls { get; } = new();
+
     public void RaiseNavigated(Screen screen, StateSource source = StateSource.Touch, string? orderId = null)
         => _navigated?.Invoke(screen, source, orderId);
 
@@ -30,5 +32,6 @@ internal sealed class FakeNavigationService : INavigationService
 
     public void NavigateTo(string screen) { }
 
-    public void NavigateTo(Screen screen, StateSource source = StateSource.Touch, string? orderId = null) { }
+    public void NavigateTo(Screen screen, StateSource source = StateSource.Touch, string? orderId = null)
+        => NavigateToCalls.Add((screen, source, orderId));
 }

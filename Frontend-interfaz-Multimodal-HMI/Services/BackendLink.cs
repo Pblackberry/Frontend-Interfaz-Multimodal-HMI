@@ -14,10 +14,15 @@ public sealed class BackendLink
         _nav = nav;
         _nav.Navigated += OnNavigated;
         _ws.Connected += OnConnected;
+        _ws.NavigateRequested += OnNavigateRequested;
     }
 
     private void OnNavigated(Screen screen, StateSource source, string? orderId)
         => _ = _ws.SendAsync(WsTypes.State, new StatePayload(screen, source, orderId));
+
+    private void OnNavigateRequested(string id, NavigatePayload payload)
+    => Application.Current?.Dispatcher.InvokeAsync(
+        () => _nav.NavigateTo(payload.Screen, StateSource.Backend, id));
 
     private void OnConnected()
         => Application.Current?.Dispatcher.InvokeAsync(() =>

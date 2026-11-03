@@ -13,10 +13,11 @@ namespace Frontend_interfaz_Multimodal_HMI.Services;
 public sealed class WsClient
 {
     private readonly Uri _uri;
-    private readonly SemaphoreSlim _sendLock = new(1, 1);   // ClientWebSocket solo admite un envío a la vez
+    private readonly SemaphoreSlim _sendLock = new(1, 1);
     private volatile ClientWebSocket? _socket;
 
     public event Action<CatalogUpdatePayload>? CatalogUpdated;
+    public event Action<string, NavigatePayload>? NavigateRequested;
     public event Action? Connected;
 
     public WsClient(Uri uri) => _uri = uri;
@@ -97,6 +98,9 @@ public sealed class WsClient
                 case WsTypes.CatalogUpdate:
                     var payload = env.Payload.Deserialize<CatalogUpdatePayload>(WsJson.Options)!;
                     CatalogUpdated?.Invoke(payload);
+                    break;
+                case WsTypes.Navigate:
+                    NavigateRequested?.Invoke(env.Id, env.Payload.Deserialize<NavigatePayload>(WsJson.Options)!);
                     break;
                 default:
                     Debug.WriteLine($"[WS] Tipo desconocido, se ignora: {env.Type}");
