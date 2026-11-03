@@ -56,13 +56,12 @@ public class NavigationServiceScreenTests : IDisposable
 
     private MenuViewModel RegisterMenu()
     {
-        var menu = new MenuViewModel(new CatalogStore());
+        var menu = new MenuViewModel(new CatalogStore(), new FakeImageLoader());
         _menus.Add(menu);
         _provider.Add(menu);
         return menu;
     }
 
-    // ---------- estado inicial ----------
 
     [Fact]
     public void NewService_HasNoCurrentScreenAndNoEvents()
@@ -71,7 +70,6 @@ public class NavigationServiceScreenTests : IDisposable
         Assert.Empty(_navigated);
     }
 
-    // ---------- NavigateTo(Screen, ...) ----------
 
     [Fact]
     public void NavigateToScreen_SetsTheViewModelAndTheCurrentScreen()
@@ -214,7 +212,6 @@ public class NavigationServiceScreenTests : IDisposable
         Assert.Empty(_navigated);
     }
 
-    // ---------- NavigateTo(string) ----------
 
     [Theory]
     [InlineData("menu", Screen.Menu)]
@@ -250,7 +247,6 @@ public class NavigationServiceScreenTests : IDisposable
         Assert.Empty(_navigated);
     }
 
-    // ---------- NavigateTo<T>() ----------
 
     [Fact]
     public void NavigateToGeneric_WithAViewModelThatHasAScreen_BehavesLikeNavigatingToThatScreen()

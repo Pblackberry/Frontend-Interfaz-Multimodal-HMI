@@ -1,6 +1,7 @@
-using System;                                   // NUEVO
-using System.Threading;                         // NUEVO
-using System.Threading.Tasks;                   // NUEVO
+using System;
+using System.Net.Http;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Windows;
 using Frontend_interfaz_Multimodal_HMI.Services;
 using Frontend_interfaz_Multimodal_HMI.ViewModels;
@@ -8,12 +9,8 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Frontend_interfaz_Multimodal_HMI;
 
-/// <summary>
-/// Interaction logic for App.xaml
-/// </summary>
 public partial class App : Application
 {
-    // Ajusta host, puerto y ruta a los de tu backend
     private const string _wsUrl = "ws://localhost:8888/ws";
 
     private ServiceProvider? _services;
@@ -31,6 +28,13 @@ public partial class App : Application
         sc.AddTransient<WelcomeViewModel>();
         sc.AddTransient<MenuViewModel>();
         sc.AddSingleton<BackendLink>();
+        sc.AddSingleton<IImageLoader>(_ =>
+        {
+            var http = new HttpClient { Timeout = TimeSpan.FromSeconds(10) };
+            http.DefaultRequestHeaders.UserAgent.ParseAdd("CobotBartenderHMI/1.0 (proyecto de titulacion)");
+            return new ImageLoader(http);
+        });
+
         _services = sc.BuildServiceProvider();
         _ = _services.GetRequiredService<BackendLink>();
 
