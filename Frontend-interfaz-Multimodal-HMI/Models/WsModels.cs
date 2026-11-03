@@ -10,8 +10,8 @@ public static class WsJson
 {
     public static readonly JsonSerializerOptions Options = new()
     {
-        PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower,        // NombreItem <-> nombre_item
-        NumberHandling = JsonNumberHandling.AllowReadingFromString,    // "5.50" -> decimal
+        PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower,
+        NumberHandling = JsonNumberHandling.AllowReadingFromString,
         Converters = { new JsonStringEnumConverter(JsonNamingPolicy.SnakeCaseLower) },
     };
 }
@@ -20,6 +20,7 @@ public static class WsTypes
 {
     public const string CatalogUpdate = "catalog_update";
     public const string State = "state";
+    public const string Navigate = "navigate";
 }
 
 public enum Screen { Welcome, Menu }
@@ -42,3 +43,5 @@ public sealed class WsEnvelope
     public string Type { get; set; } = "";
     public JsonElement Payload { get; set; }
 }
+
+public sealed record NavigatePayload(Screen Screen);

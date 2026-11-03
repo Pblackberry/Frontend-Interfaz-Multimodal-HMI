@@ -192,21 +192,47 @@
       "Frontend_interfaz_Multimodal_HMI.Services.BackendLink": {
         "System.Void Frontend_interfaz_Multimodal_HMI.Services.BackendLink::OnNavigated(Frontend_interfaz_Multimodal_HMI.Models.Screen,Frontend_interfaz_Multimodal_HMI.Models.StateSource,System.String)": {
           "Lines": {
-            "20": 25
+            "21": 25
           },
           "Branches": []
         },
-        "System.Void Frontend_interfaz_Multimodal_HMI.Services.BackendLink::OnConnected()": {
+        "System.Void Frontend_interfaz_Multimodal_HMI.Services.BackendLink::OnNavigateRequested(System.String,Frontend_interfaz_Multimodal_HMI.Models.NavigatePayload)": {
           "Lines": {
-            "23": 2,
             "24": 0,
-            "25": 0,
-            "26": 0,
-            "27": 2
+            "25": 0
           },
           "Branches": [
             {
-              "Line": 23,
+              "Line": 24,
+              "Offset": 33,
+              "EndOffset": 35,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 0
+            },
+            {
+              "Line": 24,
+              "Offset": 33,
+              "EndOffset": 38,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 0
+            }
+          ]
+        },
+        "System.Void Frontend_interfaz_Multimodal_HMI.Services.BackendLink::OnConnected()": {
+          "Lines": {
+            "28": 2,
+            "29": 0,
+            "30": 0,
+            "31": 0,
+            "32": 0,
+            "33": 0,
+            "34": 2
+          },
+          "Branches": [
+            {
+              "Line": 28,
               "Offset": 6,
               "EndOffset": 8,
               "Path": 0,
@@ -214,7 +240,7 @@
               "Hits": 2
             },
             {
-              "Line": 23,
+              "Line": 28,
               "Offset": 6,
               "EndOffset": 11,
               "Path": 1,
@@ -231,15 +257,16 @@
             "14": 22,
             "15": 22,
             "16": 22,
-            "17": 22
+            "17": 22,
+            "18": 22
           },
           "Branches": []
         },
-        "System.Void Frontend_interfaz_Multimodal_HMI.Services.BackendLink::<OnConnected>b__4_0()": {
+        "System.Void Frontend_interfaz_Multimodal_HMI.Services.BackendLink::<OnConnected>b__5_0()": {
           "Lines": {},
           "Branches": [
             {
-              "Line": 25,
+              "Line": 30,
               "Offset": 20,
               "EndOffset": 22,
               "Path": 0,
@@ -247,7 +274,7 @@
               "Hits": 0
             },
             {
-              "Line": 25,
+              "Line": 30,
               "Offset": 20,
               "EndOffset": 33,
               "Path": 1,
@@ -255,7 +282,7 @@
               "Hits": 0
             },
             {
-              "Line": 25,
+              "Line": 30,
               "Offset": 36,
               "EndOffset": 38,
               "Path": 0,
@@ -263,9 +290,9 @@
               "Hits": 0
             },
             {
-              "Line": 25,
+              "Line": 30,
               "Offset": 36,
-              "EndOffset": 72,
+              "EndOffset": 74,
               "Path": 1,
               "Ordinal": 3,
               "Hits": 0
@@ -329,25 +356,25 @@
       "Frontend_interfaz_Multimodal_HMI.Services.NavigationService": {
         "System.Nullable`1<Frontend_interfaz_Multimodal_HMI.Models.Screen> Frontend_interfaz_Multimodal_HMI.Services.NavigationService::get_CurrentScreen()": {
           "Lines": {
-            "27": 188
+            "26": 188
           },
           "Branches": []
         },
         "System.Void Frontend_interfaz_Multimodal_HMI.Services.NavigationService::NavigateTo()": {
           "Lines": {
+            "31": 6,
+            "32": 18,
             "33": 6,
-            "34": 18,
-            "35": 6,
-            "36": 3,
-            "38": 3,
-            "39": 2,
-            "40": 2,
-            "42": 3,
-            "43": 4
+            "34": 3,
+            "35": 3,
+            "36": 2,
+            "37": 2,
+            "39": 3,
+            "40": 4
           },
           "Branches": [
             {
-              "Line": 34,
+              "Line": 32,
               "Offset": 12,
               "EndOffset": 14,
               "Path": 0,
@@ -355,7 +382,7 @@
               "Hits": 2
             },
             {
-              "Line": 34,
+              "Line": 32,
               "Offset": 12,
               "EndOffset": 37,
               "Path": 1,
@@ -363,7 +390,7 @@
               "Hits": 6
             },
             {
-              "Line": 35,
+              "Line": 33,
               "Offset": 55,
               "EndOffset": 57,
               "Path": 0,
@@ -371,7 +398,7 @@
               "Hits": 3
             },
             {
-              "Line": 35,
+              "Line": 33,
               "Offset": 55,
               "EndOffset": 99,
               "Path": 1,
@@ -382,15 +409,19 @@
         },
         "System.Void Frontend_interfaz_Multimodal_HMI.Services.NavigationService::NavigateTo(System.String)": {
           "Lines": {
-            "46": 62,
-            "47": 62,
-            "48": 54,
+            "43": 62,
+            "44": 62,
+            "45": 54,
+            "46": 54,
+            "47": 54,
+            "49": 8,
             "50": 8,
-            "51": 62
+            "51": 8,
+            "52": 62
           },
           "Branches": [
             {
-              "Line": 47,
+              "Line": 44,
               "Offset": 10,
               "EndOffset": 12,
               "Path": 0,
@@ -398,7 +429,7 @@
               "Hits": 55
             },
             {
-              "Line": 47,
+              "Line": 44,
               "Offset": 10,
               "EndOffset": 20,
               "Path": 1,
@@ -406,7 +437,7 @@
               "Hits": 7
             },
             {
-              "Line": 47,
+              "Line": 44,
               "Offset": 23,
               "EndOffset": 25,
               "Path": 0,
@@ -414,9 +445,9 @@
               "Hits": 54
             },
             {
-              "Line": 47,
+              "Line": 44,
               "Offset": 23,
-              "EndOffset": 37,
+              "EndOffset": 39,
               "Path": 1,
               "Ordinal": 3,
               "Hits": 8
@@ -432,9 +463,11 @@
             "59": 1,
             "62": 85,
             "63": 79,
-            "65": 83,
-            "66": 83,
-            "67": 84
+            "64": 79,
+            "65": 77,
+            "67": 83,
+            "68": 83,
+            "69": 84
           },
           "Branches": [
             {
@@ -464,23 +497,23 @@
             {
               "Line": 62,
               "Offset": 104,
-              "EndOffset": 130,
+              "EndOffset": 132,
               "Path": 1,
               "Ordinal": 3,
               "Hits": 83
             },
             {
-              "Line": 66,
-              "Offset": 150,
-              "EndOffset": 152,
+              "Line": 68,
+              "Offset": 152,
+              "EndOffset": 154,
               "Path": 0,
               "Ordinal": 4,
               "Hits": 44
             },
             {
-              "Line": 66,
-              "Offset": 150,
-              "EndOffset": 155,
+              "Line": 68,
+              "Offset": 152,
+              "EndOffset": 157,
               "Path": 1,
               "Ordinal": 5,
               "Hits": 39
@@ -509,128 +542,162 @@
       "Frontend_interfaz_Multimodal_HMI.Services.WsClient": {
         "System.Boolean Frontend_interfaz_Multimodal_HMI.Services.WsClient::get_IsConnected()": {
           "Lines": {
-            "24": 80
+            "25": 108
           },
           "Branches": [
             {
-              "Line": 24,
+              "Line": 25,
               "Offset": 9,
               "EndOffset": 11,
               "Path": 0,
               "Ordinal": 0,
-              "Hits": 46
+              "Hits": 65
             },
             {
-              "Line": 24,
+              "Line": 25,
               "Offset": 9,
               "EndOffset": 15,
               "Path": 1,
               "Ordinal": 1,
-              "Hits": 34
+              "Hits": 43
             }
           ]
         },
         "System.Void Frontend_interfaz_Multimodal_HMI.Services.WsClient::HandleMessage(System.String)": {
           "Lines": {
-            "91": 20,
-            "93": 20,
-            "94": 20,
-            "95": 19,
-            "98": 18,
-            "99": 16,
-            "100": 14,
-            "102": 1,
-            "103": 1,
-            "105": 15,
-            "106": 5,
-            "107": 5,
-            "108": 5,
-            "109": 5,
-            "110": 20
+            "92": 35,
+            "94": 35,
+            "95": 35,
+            "96": 34,
+            "99": 20,
+            "100": 18,
+            "101": 16,
+            "103": 14,
+            "104": 10,
+            "106": 0,
+            "107": 0,
+            "109": 26,
+            "110": 9,
+            "111": 9,
+            "112": 9,
+            "113": 9,
+            "114": 35
           },
           "Branches": [
             {
-              "Line": 95,
+              "Line": 96,
               "Offset": 34,
-              "EndOffset": 38,
-              "Path": 1,
-              "Ordinal": 1,
-              "Hits": 18
+              "EndOffset": 36,
+              "Path": 0,
+              "Ordinal": 0,
+              "Hits": 14
             },
             {
-              "Line": 99,
-              "Offset": 62,
-              "EndOffset": 64,
+              "Line": 96,
+              "Offset": 34,
+              "EndOffset": 51,
+              "Path": 1,
+              "Ordinal": 1,
+              "Hits": 20
+            },
+            {
+              "Line": 100,
+              "Offset": 75,
+              "EndOffset": 77,
               "Path": 0,
-              "Ordinal": 2,
+              "Ordinal": 4,
               "Hits": 0
             },
             {
-              "Line": 99,
-              "Offset": 62,
-              "EndOffset": 67,
+              "Line": 100,
+              "Offset": 75,
+              "EndOffset": 80,
               "Path": 1,
-              "Ordinal": 3,
-              "Hits": 16
+              "Ordinal": 5,
+              "Hits": 18
             },
             {
-              "Line": 95,
-              "Offset": 34,
-              "EndOffset": 76,
+              "Line": 96,
+              "Offset": 47,
+              "EndOffset": 89,
+              "Path": 1,
+              "Ordinal": 3,
+              "Hits": 14
+            },
+            {
+              "Line": 103,
+              "Offset": 96,
+              "EndOffset": 98,
               "Path": 0,
-              "Ordinal": 0,
-              "Hits": 1
+              "Ordinal": 6,
+              "Hits": 2
+            },
+            {
+              "Line": 103,
+              "Offset": 96,
+              "EndOffset": 101,
+              "Path": 1,
+              "Ordinal": 7,
+              "Hits": 12
+            },
+            {
+              "Line": 96,
+              "Offset": 47,
+              "EndOffset": 131,
+              "Path": 0,
+              "Ordinal": 2,
+              "Hits": 0
             }
           ]
         },
         "System.Void Frontend_interfaz_Multimodal_HMI.Services.WsClient::.ctor(System.Uri)": {
           "Lines": {
-            "16": 55,
-            "22": 110
+            "16": 64,
+            "23": 128
           },
           "Branches": []
         }
       },
-      "Frontend_interfaz_Multimodal_HMI.Services.WsClient/<ReceiveLoopAsync>d__13": {
-        "System.Void Frontend_interfaz_Multimodal_HMI.Services.WsClient/<ReceiveLoopAsync>d__13::MoveNext()": {
+      "Frontend_interfaz_Multimodal_HMI.Services.WsClient/<ReceiveLoopAsync>d__16": {
+        "System.Void Frontend_interfaz_Multimodal_HMI.Services.WsClient/<ReceiveLoopAsync>d__16::MoveNext()": {
           "Lines": {
-            "67": 48,
-            "68": 48,
-            "69": 48,
-            "71": 68,
-            "72": 68,
-            "73": 68,
-            "76": 73,
-            "77": 73,
-            "78": 27,
-            "79": 2,
+            "68": 57,
+            "69": 57,
+            "70": 57,
+            "72": 92,
+            "73": 92,
+            "74": 92,
+            "77": 97,
+            "78": 97,
+            "79": 42,
             "80": 2,
             "81": 2,
-            "83": 25,
-            "84": 50,
-            "86": 20,
-            "87": 20,
-            "88": 2
+            "82": 2,
+            "84": 40,
+            "85": 80,
+            "87": 35,
+            "88": 35,
+            "89": 2
           },
           "Branches": [
             {
-              "Line": 71,
+              "Line": 72,
               "Offset": 511,
               "EndOffset": 67,
               "Path": 1,
               "Ordinal": 7,
-              "Hits": 68
+              "Hits": 92
             },
             {
-              "Line": 84,
+              "Line": 85,
               "Offset": 417,
               "EndOffset": 82,
               "Path": 1,
               "Ordinal": 3,
-              "Hits": 73
+              "Hits": 97
             },
             {
-              "Line": 78,
+              "Line": 79,
               "Offset": 241,
               "EndOffset": 243,
               "Path": 0,
@@ -638,31 +705,31 @@
               "Hits": 2
             },
             {
-              "Line": 78,
+              "Line": 79,
               "Offset": 241,
               "EndOffset": 368,
               "Path": 1,
               "Ordinal": 1,
-              "Hits": 25
+              "Hits": 40
             },
             {
-              "Line": 84,
+              "Line": 85,
               "Offset": 417,
               "EndOffset": 422,
               "Path": 0,
               "Ordinal": 2,
-              "Hits": 20
+              "Hits": 35
             },
             {
-              "Line": 71,
+              "Line": 72,
               "Offset": 488,
               "EndOffset": 490,
               "Path": 0,
               "Ordinal": 4,
-              "Hits": 68
+              "Hits": 92
             },
             {
-              "Line": 71,
+              "Line": 72,
               "Offset": 488,
               "EndOffset": 506,
               "Path": 1,
@@ -670,7 +737,7 @@
               "Hits": 0
             },
             {
-              "Line": 71,
+              "Line": 72,
               "Offset": 511,
               "EndOffset": 516,
               "Path": 0,
@@ -680,62 +747,62 @@
           ]
         }
       },
-      "Frontend_interfaz_Multimodal_HMI.Services.WsClient/<RunAsync>d__12": {
-        "System.Void Frontend_interfaz_Multimodal_HMI.Services.WsClient/<RunAsync>d__12::MoveNext()": {
+      "Frontend_interfaz_Multimodal_HMI.Services.WsClient/<RunAsync>d__15": {
+        "System.Void Frontend_interfaz_Multimodal_HMI.Services.WsClient/<RunAsync>d__15::MoveNext()": {
           "Lines": {
-            "27": 48,
-            "28": 48,
-            "30": 48,
-            "31": 50,
-            "32": 49,
-            "33": 49,
-            "34": 49,
-            "36": 49,
-            "37": 49,
-            "38": 48,
-            "39": 48,
-            "40": 48,
-            "41": 48,
-            "42": 48,
-            "43": 2,
-            "44": 46,
-            "45": 46,
-            "46": 46,
-            "48": 1,
+            "28": 57,
+            "29": 57,
+            "31": 57,
+            "32": 59,
+            "33": 58,
+            "34": 58,
+            "35": 58,
+            "37": 58,
+            "38": 58,
+            "39": 57,
+            "40": 57,
+            "41": 57,
+            "42": 57,
+            "43": 57,
+            "44": 2,
+            "45": 55,
+            "46": 55,
+            "47": 55,
             "49": 1,
             "50": 1,
             "51": 1,
-            "53": 49,
-            "54": 49,
-            "55": 49,
-            "57": 3,
+            "52": 1,
+            "54": 58,
+            "55": 58,
+            "56": 58,
             "58": 3,
             "59": 3,
             "60": 3,
-            "61": 2,
-            "62": 47,
-            "63": 3,
-            "64": 48
+            "61": 3,
+            "62": 2,
+            "63": 56,
+            "64": 3,
+            "65": 57
           },
           "Branches": [
             {
-              "Line": 31,
+              "Line": 32,
               "Offset": 880,
               "EndOffset": 38,
               "Path": 1,
               "Ordinal": 3,
-              "Hits": 49
+              "Hits": 58
             },
             {
-              "Line": 41,
+              "Line": 42,
               "Offset": 325,
               "EndOffset": 327,
               "Path": 0,
               "Ordinal": 0,
-              "Hits": 43
+              "Hits": 52
             },
             {
-              "Line": 41,
+              "Line": 42,
               "Offset": 325,
               "EndOffset": 330,
               "Path": 1,
@@ -743,38 +810,40 @@
               "Hits": 5
             },
             {
-              "Line": 31,
+              "Line": 32,
               "Offset": 880,
               "EndOffset": 885,
               "Path": 0,
               "Ordinal": 2,
-              "Hits": 47
+              "Hits": 56
             }
           ]
         }
       },
-      "Frontend_interfaz_Multimodal_HMI.Services.WsClient/<SendAsync>d__15`1": {
-        "System.Void Frontend_interfaz_Multimodal_HMI.Services.WsClient/<SendAsync>d__15`1::MoveNext()": {
+      "Frontend_interfaz_Multimodal_HMI.Services.WsClient/<SendAsync>d__18`1": {
+        "System.Void Frontend_interfaz_Multimodal_HMI.Services.WsClient/<SendAsync>d__18`1::MoveNext()": {
           "Lines": {
-            "114": 62,
-            "115": 62,
-            "116": 69,
-            "118": 55,
-            "119": 55,
-            "121": 55,
-            "123": 54,
-            "124": 54,
-            "125": 53,
-            "127": 1,
-            "128": 1,
-            "129": 1,
-            "130": 1,
-            "132": 162,
-            "133": 61
+            "118": 62,
+            "119": 62,
+            "120": 62,
+            "121": 7,
+            "122": 7,
+            "125": 55,
+            "126": 55,
+            "128": 55,
+            "130": 54,
+            "131": 54,
+            "132": 53,
+            "134": 1,
+            "135": 1,
+            "136": 1,
+            "137": 1,
+            "139": 162,
+            "140": 61
           },
           "Branches": [
             {
-              "Line": 116,
+              "Line": 120,
               "Offset": 54,
               "EndOffset": 56,
               "Path": 0,
@@ -782,7 +851,7 @@
               "Hits": 55
             },
             {
-              "Line": 116,
+              "Line": 120,
               "Offset": 54,
               "EndOffset": 72,
               "Path": 1,
@@ -790,7 +859,7 @@
               "Hits": 7
             },
             {
-              "Line": 116,
+              "Line": 120,
               "Offset": 78,
               "EndOffset": 80,
               "Path": 0,
@@ -798,9 +867,9 @@
               "Hits": 7
             },
             {
-              "Line": 116,
+              "Line": 120,
               "Offset": 78,
-              "EndOffset": 87,
+              "EndOffset": 88,
               "Path": 1,
               "Ordinal": 3,
               "Hits": 55
@@ -851,13 +920,13 @@
       "Frontend_interfaz_Multimodal_HMI.Models.CobotCatalogResponse": {
         "System.Collections.Generic.List`1<Frontend_interfaz_Multimodal_HMI.Models.CobotMenuItem> Frontend_interfaz_Multimodal_HMI.Models.CobotCatalogResponse::get_Items()": {
           "Lines": {
-            "19": 166
+            "19": 172
           },
           "Branches": []
         },
         "System.Int32 Frontend_interfaz_Multimodal_HMI.Models.CobotCatalogResponse::get_Total()": {
           "Lines": {
-            "20": 42
+            "20": 44
           },
           "Branches": []
         }
@@ -865,13 +934,13 @@
       "Frontend_interfaz_Multimodal_HMI.Models.CatalogUpdatePayload": {
         "System.String Frontend_interfaz_Multimodal_HMI.Models.CatalogUpdatePayload::get_UltimaActualizacion()": {
           "Lines": {
-            "25": 116
+            "25": 122
           },
           "Branches": []
         },
         "Frontend_interfaz_Multimodal_HMI.Models.CobotCatalogResponse Frontend_interfaz_Multimodal_HMI.Models.CatalogUpdatePayload::get_Catalogo()": {
           "Lines": {
-            "26": 127
+            "26": 131
           },
           "Branches": []
         }
@@ -894,25 +963,25 @@
       "Frontend_interfaz_Multimodal_HMI.Models.WsEnvelope`1": {
         "System.String Frontend_interfaz_Multimodal_HMI.Models.WsEnvelope`1::get_Id()": {
           "Lines": {
-            "31": 126
+            "32": 126
           },
           "Branches": []
         },
         "System.DateTimeOffset Frontend_interfaz_Multimodal_HMI.Models.WsEnvelope`1::get_Ts()": {
           "Lines": {
-            "32": 124
+            "33": 124
           },
           "Branches": []
         },
         "System.String Frontend_interfaz_Multimodal_HMI.Models.WsEnvelope`1::get_Type()": {
           "Lines": {
-            "33": 122
+            "34": 122
           },
           "Branches": []
         },
         "T Frontend_interfaz_Multimodal_HMI.Models.WsEnvelope`1::get_Payload()": {
           "Lines": {
-            "34": 122
+            "35": 122
           },
           "Branches": []
         }
@@ -920,7 +989,7 @@
       "Frontend_interfaz_Multimodal_HMI.Models.StatePayload": {
         "Frontend_interfaz_Multimodal_HMI.Models.Screen Frontend_interfaz_Multimodal_HMI.Models.StatePayload::get_Screen()": {
           "Lines": {
-            "37": 131
+            "38": 131
           },
           "Branches": []
         }
@@ -928,25 +997,33 @@
       "Frontend_interfaz_Multimodal_HMI.Models.WsEnvelope": {
         "System.String Frontend_interfaz_Multimodal_HMI.Models.WsEnvelope::get_Id()": {
           "Lines": {
-            "40": 66
+            "41": 111
           },
           "Branches": []
         },
         "System.DateTimeOffset Frontend_interfaz_Multimodal_HMI.Models.WsEnvelope::get_Ts()": {
           "Lines": {
-            "41": 38
+            "42": 55
           },
           "Branches": []
         },
         "System.String Frontend_interfaz_Multimodal_HMI.Models.WsEnvelope::get_Type()": {
           "Lines": {
-            "42": 87
+            "43": 134
           },
           "Branches": []
         },
         "System.Text.Json.JsonElement Frontend_interfaz_Multimodal_HMI.Models.WsEnvelope::get_Payload()": {
           "Lines": {
-            "43": 56
+            "44": 86
+          },
+          "Branches": []
+        }
+      },
+      "Frontend_interfaz_Multimodal_HMI.Models.NavigatePayload": {
+        "Frontend_interfaz_Multimodal_HMI.Models.Screen Frontend_interfaz_Multimodal_HMI.Models.NavigatePayload::get_Screen()": {
+          "Lines": {
+            "47": 27
           },
           "Branches": []
         }
