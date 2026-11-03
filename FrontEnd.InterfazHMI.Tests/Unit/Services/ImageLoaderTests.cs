@@ -9,7 +9,7 @@ public class ImageLoaderTests
     private const long _maxBytes = 5 * 1024 * 1024;
     private const string _url = "https://cdn.test/mojito.png";
 
-    private static readonly byte[] Png = Convert.FromBase64String(
+    private static readonly byte[] _png = Convert.FromBase64String(
         "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg==");
 
     private readonly StubHandler _handler = new();
@@ -19,13 +19,13 @@ public class ImageLoaderTests
     private static byte[] PngPaddedTo(long length)
     {
         var body = new byte[length];
-        Png.CopyTo(body, 0);
+        _png.CopyTo(body, 0);
         return body;
     }
 
     private static HttpResponseMessage Ok(byte[]? body = null) => new(HttpStatusCode.OK)
     {
-        Content = new ByteArrayContent(body ?? Png),
+        Content = new ByteArrayContent(body ?? _png),
     };
 
 
@@ -118,7 +118,7 @@ public class ImageLoaderTests
     {
         _handler.Respond = _ =>
         {
-            var content = new ByteArrayContent(Png);
+            var content = new ByteArrayContent(_png);
             content.Headers.ContentLength = _maxBytes + 1;
             return Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK) { Content = content });
         };
@@ -248,7 +248,7 @@ public class ImageLoaderTests
         public Func<HttpRequestMessage, Task<HttpResponseMessage>> Respond { get; set; }
             = _ => Task.FromResult(new HttpResponseMessage(HttpStatusCode.OK)
             {
-                Content = new ByteArrayContent(Png),
+                Content = new ByteArrayContent(_png),
             });
 
         public int RequestCount => Volatile.Read(ref _count);
