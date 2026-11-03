@@ -1,0 +1,48 @@
+<UserControl x:Class="Frontend_interfaz_Multimodal_HMI.Views.PaymentView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <Grid>
+    <Image Source="/Assets/ice_top_left.png" Width="170"
+           HorizontalAlignment="Right" VerticalAlignment="Top"
+           IsHitTestVisible="False" RenderTransformOrigin="0.5,0.5">
+      <Image.RenderTransform>
+        <ScaleTransform ScaleX="-1"/>
+      </Image.RenderTransform>
+    </Image>
+
+    <StackPanel MaxWidth="440" Margin="24,48,24,24" VerticalAlignment="Top">
+
+      <Border Style="{StaticResource PanelCard}" Padding="24,16">
+        <StackPanel>
+          <TextBlock Text="{Binding DrinkName}" FontSize="34" FontWeight="Bold"
+                     Foreground="{StaticResource InkBrush}" TextWrapping="Wrap"/>
+          <TextBlock Text="{Binding PriceText}" FontSize="26" FontWeight="Bold"
+                     Foreground="{StaticResource AccentBrush}"/>
+        </StackPanel>
+      </Border>
+
+      <Border Style="{StaticResource PanelCard}" Margin="0,24,0,0">
+        <StackPanel>
+          <TextBlock Text="Realizar pago" FontSize="34" FontWeight="Bold"
+                     Foreground="{StaticResource InkBrush}"/>
+          <TextBlock Text="Escanea el código para realizar tu pago"
+                     FontSize="20" FontWeight="Bold" TextWrapping="Wrap"
+                     Foreground="{StaticResource AccentBrush}" Margin="0,4,0,0"/>
+
+          <Grid Width="200" Height="200" Margin="0,28" HorizontalAlignment="Center">
+            <Rectangle RadiusX="12" RadiusY="12" Fill="White"
+                       Stroke="{StaticResource AccentBrush}" StrokeThickness="2"
+                       StrokeDashArray="4 3"/>
+            <TextBlock Text="Aquí irá el QR de pago" Style="{StaticResource Hint}"
+                       VerticalAlignment="Center" Margin="16"/>
+          </Grid>
+
+          <Button Content="Cancelar" Style="{StaticResource PrimaryButton}"
+                  Background="{StaticResource DangerBrush}"
+                  HorizontalAlignment="Right"
+                  Command="{Binding CancelCommand}"/>
+        </StackPanel>
+      </Border>
+    </StackPanel>
+  </Grid>
+</UserControl>

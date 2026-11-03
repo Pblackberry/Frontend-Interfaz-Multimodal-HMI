@@ -23,7 +23,7 @@ public static class WsTypes
     public const string Navigate = "navigate";
 }
 
-public enum Screen { Welcome, Menu }
+public enum Screen { Welcome, Menu, Payment }
 public enum StateSource { Touch, Backend, Init }
 
 

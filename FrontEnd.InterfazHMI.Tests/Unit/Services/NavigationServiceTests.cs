@@ -45,7 +45,7 @@ public class NavigationServiceTests : IDisposable
 
     private MenuViewModel RegisterMenu()
     {
-        var menu = new MenuViewModel(new CatalogStore(), new FakeImageLoader());
+        var menu = new MenuViewModel(new CatalogStore(), new FakeImageLoader(), new OrderSession(), _sut);
         _menus.Add(menu);
         _provider.Add(menu);
         return menu;

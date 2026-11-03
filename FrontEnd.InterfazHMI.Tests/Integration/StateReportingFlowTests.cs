@@ -18,6 +18,7 @@ public class StateReportingFlowTests
         services.AddSingleton<INavigationService, NavigationService>();
         services.AddSingleton<CatalogStore>();
         services.AddSingleton<IImageLoader, FakeImageLoader>();
+        services.AddSingleton<OrderSession>();
         services.AddSingleton<MainViewModel>();
         services.AddTransient<WelcomeViewModel>();
         services.AddTransient<MenuViewModel>();

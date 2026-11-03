@@ -7,6 +7,7 @@
     <SolidColorBrush x:Key="HintBrush"   Color="#1F5FA8"/>
     <SolidColorBrush x:Key="InkBrush"    Color="#000000"/>
     <SolidColorBrush x:Key="OnAccentBrush" Color="#F3E9DC"/>
+    <SolidColorBrush x:Key="DangerBrush" Color="#D4553A"/>
 
     <!-- Tarjeta gris redondeada -->
     <Style x:Key="PanelCard" TargetType="Border">
@@ -42,6 +43,7 @@
 
     <!-- Botón principal (táctil: alto mínimo 56 px, feedback al pulsar) -->
     <Style x:Key="PrimaryButton" TargetType="Button">
+        <Setter Property="Background" Value="{StaticResource AccentBrush}"/>
         <Setter Property="Foreground" Value="{StaticResource OnAccentBrush}"/>
         <Setter Property="FontSize" Value="18"/>
         <Setter Property="FontWeight" Value="Bold"/>
@@ -51,7 +53,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
-                    <Border x:Name="Bd" Background="{StaticResource AccentBrush}"
+                    <Border x:Name="Bd" Background="{TemplateBinding Background}"
                             CornerRadius="8" Padding="{TemplateBinding Padding}"
                             RenderTransformOrigin="0.5,0.5">
                         <Border.RenderTransform>
@@ -133,5 +135,27 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+    </Style>
+
+  <!-- Botón redondo de información (ingredientes) -->
+    <Style x:Key="InfoButton" TargetType="Button">
+      <Setter Property="Width" Value="36"/>
+      <Setter Property="Height" Value="36"/>
+      <Setter Property="Foreground" Value="White"/>
+      <Setter Property="Background" Value="{StaticResource AccentBrush}"/>
+      <Setter Property="Template">
+        <Setter.Value>
+          <ControlTemplate TargetType="Button">
+            <Border x:Name="Bg" Background="{TemplateBinding Background}" CornerRadius="18">
+              <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            </Border>
+            <ControlTemplate.Triggers>
+              <Trigger Property="IsPressed" Value="True">
+                <Setter TargetName="Bg" Property="Opacity" Value="0.75"/>
+              </Trigger>
+            </ControlTemplate.Triggers>
+          </ControlTemplate>
+        </Setter.Value>
+      </Setter>
     </Style>
 </ResourceDictionary>

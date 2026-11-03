@@ -21,6 +21,8 @@ public class MenuViewModelTests : IDisposable
     }
 
     private readonly FakeImageLoader _loader = new();
+    private readonly OrderSession _order = new();
+    private readonly FakeNavigationService _nav = new();
 
     private (MenuViewModel Sut, CatalogStore Store) CreateSut(params CobotMenuItem[] items)
     {
@@ -30,7 +32,7 @@ public class MenuViewModelTests : IDisposable
             store.Update(TestData.Payload("f1", items));
         }
 
-        var sut = new MenuViewModel(store, _loader);
+        var sut = new MenuViewModel(store, _loader, _order, _nav);
         _created.Add(sut);
         return (sut, store);
     }
@@ -56,7 +58,7 @@ public class MenuViewModelTests : IDisposable
         var store = new CatalogStore();
         store.Update(TestData.Payload("f1", TestData.Item("Mojito"), TestData.Item("Daiquiri")));
 
-        var sut = new MenuViewModel(store, FakeImageLoader.Returning(image));
+        var sut = new MenuViewModel(store, FakeImageLoader.Returning(image), _order, _nav);
         _created.Add(sut);
 
         Assert.All(sut.Items, card => Assert.Same(image, card.Image));
@@ -148,14 +150,35 @@ public class MenuViewModelTests : IDisposable
     }
 
     [Fact]
-    public void SelectDrinkCommand_WithADrink_DoesNotThrowNorChangeTheItems()
+    public void SelectDrinkCommand_WithADrink_StoresItInTheOrder()
     {
         var (sut, _) = CreateSut(TestData.Item("Mojito"), TestData.Item("Daiquiri"));
 
-        var exception = Record.Exception(() => sut.SelectDrinkCommand.Execute(sut.Items[0]));
+        sut.SelectDrinkCommand.Execute(sut.Items[1]);
 
-        Assert.Null(exception);
+        Assert.Same(sut.Items[1].Item, _order.SelectedDrink);
         Assert.Equal(2, sut.Items.Count);
+    }
+
+    [Fact]
+    public void SelectDrinkCommand_WithADrink_NavigatesToPayment()
+    {
+        var (sut, _) = CreateSut(TestData.Item("Mojito"));
+
+        sut.SelectDrinkCommand.Execute(sut.Items[0]);
+
+        Assert.Equal(new[] { (Screen.Payment, StateSource.Touch, (string?)null) }, _nav.NavigateToCalls);
+    }
+
+    [Fact]
+    public void SelectDrinkCommand_SelectingAgain_ReplacesTheDrink()
+    {
+        var (sut, _) = CreateSut(TestData.Item("Mojito"), TestData.Item("Daiquiri"));
+
+        sut.SelectDrinkCommand.Execute(sut.Items[0]);
+        sut.SelectDrinkCommand.Execute(sut.Items[1]);
+
+        Assert.Same(sut.Items[1].Item, _order.SelectedDrink);
     }
 
     [Fact]
@@ -163,9 +186,101 @@ public class MenuViewModelTests : IDisposable
     {
         var (sut, _) = CreateSut(TestData.Item("Mojito"));
 
-        var exception = Record.Exception(() => sut.SelectDrinkCommand.Execute(null));
+        sut.SelectDrinkCommand.Execute(null);
+
+        Assert.Null(_order.SelectedDrink);
+        Assert.Empty(_nav.NavigateToCalls);
+        Assert.Single(sut.Items);
+    }
+
+
+    [Fact]
+    public void InfoDrink_StartsClosed()
+    {
+        var (sut, _) = CreateSut(TestData.Item("Mojito"));
+
+        Assert.Null(sut.InfoDrink);
+        Assert.False(sut.IsInfoOpen);
+    }
+
+    [Fact]
+    public void ShowIngredientsCommand_OpensTheInfoOfThatDrink()
+    {
+        var (sut, _) = CreateSut(TestData.Item("Mojito"), TestData.Item("Daiquiri"));
+
+        sut.ShowIngredientsCommand.Execute(sut.Items[1]);
+
+        Assert.Same(sut.Items[1], sut.InfoDrink);
+        Assert.True(sut.IsInfoOpen);
+    }
+
+    [Fact]
+    public void ShowIngredientsCommand_RaisesPropertyChangedForInfoDrinkAndIsInfoOpen()
+    {
+        var (sut, _) = CreateSut(TestData.Item("Mojito"));
+        var raised = new List<string?>();
+        sut.PropertyChanged += (_, e) => raised.Add(e.PropertyName);
+
+        sut.ShowIngredientsCommand.Execute(sut.Items[0]);
+
+        Assert.Contains(nameof(MenuViewModel.InfoDrink), raised);
+        Assert.Contains(nameof(MenuViewModel.IsInfoOpen), raised);
+    }
+
+    [Fact]
+    public void ShowIngredientsCommand_WithAnotherDrink_SwitchesTheInfo()
+    {
+        var (sut, _) = CreateSut(TestData.Item("Mojito"), TestData.Item("Daiquiri"));
+        sut.ShowIngredientsCommand.Execute(sut.Items[0]);
+
+        sut.ShowIngredientsCommand.Execute(sut.Items[1]);
+
+        Assert.Same(sut.Items[1], sut.InfoDrink);
+    }
+
+    [Fact]
+    public void ShowIngredientsCommand_WithNull_ClosesTheInfo()
+    {
+        var (sut, _) = CreateSut(TestData.Item("Mojito"));
+        sut.ShowIngredientsCommand.Execute(sut.Items[0]);
+
+        sut.ShowIngredientsCommand.Execute(null);
+
+        Assert.Null(sut.InfoDrink);
+        Assert.False(sut.IsInfoOpen);
+    }
+
+    [Fact]
+    public void ShowIngredientsCommand_DoesNotSelectNorNavigate()
+    {
+        var (sut, _) = CreateSut(TestData.Item("Mojito"));
+
+        sut.ShowIngredientsCommand.Execute(sut.Items[0]);
+
+        Assert.Null(_order.SelectedDrink);
+        Assert.Empty(_nav.NavigateToCalls);
+    }
+
+    [Fact]
+    public void CloseIngredientsCommand_ClosesTheInfo()
+    {
+        var (sut, _) = CreateSut(TestData.Item("Mojito"));
+        sut.ShowIngredientsCommand.Execute(sut.Items[0]);
+
+        sut.CloseIngredientsCommand.Execute(null);
+
+        Assert.Null(sut.InfoDrink);
+        Assert.False(sut.IsInfoOpen);
+    }
+
+    [Fact]
+    public void CloseIngredientsCommand_WhenAlreadyClosed_DoesNothing()
+    {
+        var (sut, _) = CreateSut(TestData.Item("Mojito"));
+
+        var exception = Record.Exception(() => sut.CloseIngredientsCommand.Execute(null));
 
         Assert.Null(exception);
-        Assert.Single(sut.Items);
+        Assert.False(sut.IsInfoOpen);
     }
 }
