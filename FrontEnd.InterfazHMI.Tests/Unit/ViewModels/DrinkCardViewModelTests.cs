@@ -130,6 +130,32 @@ public class DrinkCardViewModelTests
         Assert.False(sut.HasImage);
     }
 
+
+    [Fact]
+    public void Ingredients_AreParsedFromTheItem()
+    {
+        var item = TestData.Item(ingredientes: "ron 40%; menta");
+
+        var sut = new DrinkCardViewModel(item, new FakeImageLoader());
+
+        Assert.Equal(new[] { "40% Ron", "Menta" }, sut.Ingredients.Select(i => i.Display));
+        Assert.True(sut.HasIngredients);
+    }
+
+    [Theory]
+    [InlineData(null)]
+    [InlineData("")]
+    [InlineData("   ")]
+    public void Ingredients_WhenTheItemHasNone_AreEmptyAndHasIngredientsIsFalse(string? raw)
+    {
+        var item = TestData.Item(ingredientes: raw);
+
+        var sut = new DrinkCardViewModel(item, new FakeImageLoader());
+
+        Assert.Empty(sut.Ingredients);
+        Assert.False(sut.HasIngredients);
+    }
+
     [Theory]
     [InlineData("5.5", "$5.50")]
     [InlineData("6", "$6.00")]

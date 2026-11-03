@@ -14,10 +14,13 @@ public sealed partial class DrinkCardViewModel : ObservableObject
         Item = item;
         Name = item.NombreItem;
         PriceText = "$" + item.PrecioItem.ToString("0.00", CultureInfo.InvariantCulture);
+        Ingredients = IngredientParser.Parse(item.Ingredientes);
         ImageUrl = item.Imagen;
         _ = LoadImageAsync(images);
     }
 
+    public IReadOnlyList<Ingredient> Ingredients { get; }
+    public bool HasIngredients => Ingredients.Count > 0;
     public CobotMenuItem Item { get; }
     public string Name { get; }
     public string PriceText { get; }

@@ -16,7 +16,6 @@ public class WsStateModelsTests
     private static string[] PropertyNames(JsonElement element)
         => element.EnumerateObject().Select(p => p.Name).ToArray();
 
-    // ---------- WsTypes ----------
 
     [Fact]
     public void WsTypes_State_MatchesTheBackendTypeName()
@@ -24,7 +23,6 @@ public class WsStateModelsTests
         Assert.Equal("state", WsTypes.State);
     }
 
-    // ---------- Screen ----------
 
     [Theory]
     [InlineData(Screen.Welcome, "welcome")]
@@ -47,7 +45,7 @@ public class WsStateModelsTests
     {
         var names = Enum.GetNames<Screen>().Select(n => n.ToLowerInvariant()).OrderBy(n => n);
 
-        Assert.Equal(new[] { "menu", "welcome" }, names);
+        Assert.Equal(new[] { "menu", "payment", "welcome" }, names);
     }
 
     [Theory]
@@ -59,7 +57,6 @@ public class WsStateModelsTests
             () => JsonSerializer.Deserialize<Screen>("\"" + text + "\"", WsJson.Options));
     }
 
-    // ---------- StateSource ----------
 
     [Theory]
     [InlineData(StateSource.Touch, "touch")]
@@ -78,7 +75,6 @@ public class WsStateModelsTests
         Assert.Equal(new[] { "backend", "init", "touch" }, names);
     }
 
-    // ---------- StatePayload ----------
 
     [Fact]
     public void StatePayload_RefIsNullByDefault()
@@ -123,7 +119,6 @@ public class WsStateModelsTests
             new StatePayload(Screen.Menu, StateSource.Init));
     }
 
-    // ---------- WsEnvelope<T> ----------
 
     [Fact]
     public void Envelope_GeneratesA32CharacterHexId()

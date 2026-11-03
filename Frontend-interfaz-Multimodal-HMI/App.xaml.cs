@@ -28,6 +28,8 @@ public partial class App : Application
         sc.AddTransient<WelcomeViewModel>();
         sc.AddTransient<MenuViewModel>();
         sc.AddSingleton<BackendLink>();
+        sc.AddSingleton<OrderSession>();
+        sc.AddTransient<PaymentViewModel>();
         sc.AddSingleton<IImageLoader>(_ =>
         {
             var http = new HttpClient { Timeout = TimeSpan.FromSeconds(10) };
