@@ -62,6 +62,10 @@ public partial class NavigationService : ObservableObject, INavigationService
 
         if (CurrentScreen != screen)
         {
+            if (Current is ObservableRecipient previous)
+            {
+                previous.IsActive = false;
+            }
             Current = (ObservableObject)_sp.GetRequiredService(vmType);
         }
 

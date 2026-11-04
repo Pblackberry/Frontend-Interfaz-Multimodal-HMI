@@ -21,6 +21,9 @@ public static class WsTypes
     public const string CatalogUpdate = "catalog_update";
     public const string State = "state";
     public const string Navigate = "navigate";
+    public const string SelectDrink = "select_drink";
+    public const string ShowIngredients = "show_ingredients";
+    public const string CloseIngredients = "close_ingredients";
 }
 
 public enum Screen { Welcome, Menu, Payment }
@@ -35,6 +38,7 @@ public sealed class WsEnvelope<T>
     public required T Payload { get; set; }
 }
 
+public sealed record DrinkRefPayload(string Name);
 public sealed record StatePayload(Screen Screen, StateSource Source, string? Ref = null);
 public sealed class WsEnvelope
 {
