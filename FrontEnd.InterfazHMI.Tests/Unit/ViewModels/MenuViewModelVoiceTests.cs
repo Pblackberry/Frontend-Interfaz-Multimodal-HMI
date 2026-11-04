@@ -15,6 +15,8 @@ public class MenuViewModelVoiceTests : IDisposable
 
     public MenuViewModelVoiceTests()
     {
+        WeakReferenceMessenger.Default.Reset();
+
         var store = new CatalogStore();
         store.Update(TestData.Payload(
             "f1",
@@ -24,7 +26,11 @@ public class MenuViewModelVoiceTests : IDisposable
         _sut = new MenuViewModel(store, new FakeImageLoader(), _order, _nav);
     }
 
-    public void Dispose() => _sut.IsActive = false;
+    public void Dispose()
+    {
+        _sut.IsActive = false;
+        WeakReferenceMessenger.Default.Reset();
+    }
 
     private DrinkCardViewModel Card(string name) => _sut.Items.Single(c => c.Name == name);
 

@@ -18,6 +18,8 @@ public class OrderFlowTests : IDisposable
 
     public OrderFlowTests()
     {
+        WeakReferenceMessenger.Default.Reset();
+
         var services = new ServiceCollection();
         services.AddSingleton<INavigationService, NavigationService>();
         services.AddSingleton<CatalogStore>();
@@ -45,6 +47,7 @@ public class OrderFlowTests : IDisposable
             menu.IsActive = false;
         }
         _provider.Dispose();
+        WeakReferenceMessenger.Default.Reset();
     }
 
     private MenuViewModel OpenMenu()
