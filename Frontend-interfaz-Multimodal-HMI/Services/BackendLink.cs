@@ -1,4 +1,5 @@
 using System.Windows;
+using CommunityToolkit.Mvvm.Messaging;
 using Frontend_interfaz_Multimodal_HMI.Models;
 
 namespace Frontend_interfaz_Multimodal_HMI.Services;
@@ -7,6 +8,7 @@ public sealed class BackendLink
 {
     private readonly WsClient _ws;
     private readonly INavigationService _nav;
+    private static void _onUi(Action action) => Application.Current?.Dispatcher.InvokeAsync(action);
 
     public BackendLink(WsClient ws, INavigationService nav)
     {
@@ -15,6 +17,12 @@ public sealed class BackendLink
         _nav.Navigated += OnNavigated;
         _ws.Connected += OnConnected;
         _ws.NavigateRequested += OnNavigateRequested;
+        _ws.SelectDrinkRequested += (id, p) => _onUi(() =>
+            WeakReferenceMessenger.Default.Send(new VoiceSelectDrinkMessage(id, p.Name)));
+        _ws.ShowIngredientsRequested += p => _onUi(() =>
+            WeakReferenceMessenger.Default.Send(new VoiceShowIngredientsMessage(p.Name)));
+        _ws.CloseIngredientsRequested += () => _onUi(() =>
+            WeakReferenceMessenger.Default.Send(new VoiceCloseIngredientsMessage()));
     }
 
     private void OnNavigated(Screen screen, StateSource source, string? orderId)

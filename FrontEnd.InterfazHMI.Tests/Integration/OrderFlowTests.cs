@@ -1,3 +1,4 @@
+using CommunityToolkit.Mvvm.Messaging;
 using FrontEnd.InterfazHMI.Tests.Support;
 using Frontend_interfaz_Multimodal_HMI.Models;
 using Frontend_interfaz_Multimodal_HMI.Services;
@@ -17,6 +18,8 @@ public class OrderFlowTests : IDisposable
 
     public OrderFlowTests()
     {
+        WeakReferenceMessenger.Default.Reset();
+
         var services = new ServiceCollection();
         services.AddSingleton<INavigationService, NavigationService>();
         services.AddSingleton<CatalogStore>();
@@ -44,6 +47,7 @@ public class OrderFlowTests : IDisposable
             menu.IsActive = false;
         }
         _provider.Dispose();
+        WeakReferenceMessenger.Default.Reset();
     }
 
     private MenuViewModel OpenMenu()
@@ -131,5 +135,86 @@ public class OrderFlowTests : IDisposable
         Assert.True(menu.IsInfoOpen);
         Assert.Empty(_navigated);
         Assert.Null(_order.SelectedDrink);
+    }
+
+
+    [Fact]
+    public void VoiceSelect_FromTheMenu_ShowsThePaymentScreenWithThatDrink()
+    {
+        OpenMenu();
+
+        WeakReferenceMessenger.Default.Send(new VoiceSelectDrinkMessage("voz-1", "Daiquiri"));
+
+        var payment = Assert.IsType<PaymentViewModel>(_nav.Current);
+        Assert.Equal("Daiquiri", payment.DrinkName);
+        Assert.Equal("$6.00", payment.PriceText);
+    }
+
+    [Fact]
+    public void VoiceSelect_AnnouncesThePaymentScreenWithBackendSourceAndTheOrderId()
+    {
+        OpenMenu();
+        _navigated.Clear();
+
+        WeakReferenceMessenger.Default.Send(new VoiceSelectDrinkMessage("voz-1", "Mojito"));
+
+        Assert.Equal(new[] { (Screen.Payment, StateSource.Backend, (string?)"voz-1") }, _navigated);
+    }
+
+    [Fact]
+    public void VoiceSelect_OfAnUnknownDrink_StaysInTheMenu()
+    {
+        var menu = OpenMenu();
+        _navigated.Clear();
+
+        WeakReferenceMessenger.Default.Send(new VoiceSelectDrinkMessage("voz-1", "Tequila"));
+
+        Assert.Same(menu, _nav.Current);
+        Assert.Empty(_navigated);
+        Assert.Null(_order.SelectedDrink);
+    }
+
+    [Fact]
+    public void VoiceShowAndCloseIngredients_OnlyTogglesThePanel()
+    {
+        var menu = OpenMenu();
+        _navigated.Clear();
+
+        WeakReferenceMessenger.Default.Send(new VoiceShowIngredientsMessage("Mojito"));
+        var openedWith = menu.InfoDrink?.Name;
+        WeakReferenceMessenger.Default.Send(new VoiceCloseIngredientsMessage());
+
+        Assert.Equal("Mojito", openedWith);
+        Assert.False(menu.IsInfoOpen);
+        Assert.Same(menu, _nav.Current);
+        Assert.Empty(_navigated);
+    }
+
+    [Fact]
+    public void VoiceSelect_ThenCancelling_AllowsChoosingAgainByVoice()
+    {
+        OpenMenu();
+        WeakReferenceMessenger.Default.Send(new VoiceSelectDrinkMessage("voz-1", "Mojito"));
+        Assert.IsType<PaymentViewModel>(_nav.Current).CancelCommand.Execute(null);
+        _menus.Add(Assert.IsType<MenuViewModel>(_nav.Current));
+
+        WeakReferenceMessenger.Default.Send(new VoiceSelectDrinkMessage("voz-2", "Daiquiri"));
+
+        var payment = Assert.IsType<PaymentViewModel>(_nav.Current);
+        Assert.Equal("Daiquiri", payment.DrinkName);
+    }
+
+    [Fact]
+    public void VoiceSelect_AfterVisitingTheMenuTwice_AnnouncesOnlyOnePaymentNavigation()
+    {
+        OpenMenu();
+        WeakReferenceMessenger.Default.Send(new VoiceSelectDrinkMessage("voz-1", "Mojito"));
+        Assert.IsType<PaymentViewModel>(_nav.Current).CancelCommand.Execute(null);
+        _menus.Add(Assert.IsType<MenuViewModel>(_nav.Current));
+        _navigated.Clear();
+
+        WeakReferenceMessenger.Default.Send(new VoiceSelectDrinkMessage("voz-2", "Daiquiri"));
+
+        Assert.Equal(new[] { (Screen.Payment, StateSource.Backend, (string?)"voz-2") }, _navigated);
     }
 }

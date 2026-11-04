@@ -19,6 +19,9 @@ public sealed class WsClient
     public event Action<CatalogUpdatePayload>? CatalogUpdated;
     public event Action<string, NavigatePayload>? NavigateRequested;
     public event Action? Connected;
+    public event Action<string, DrinkRefPayload>? SelectDrinkRequested;
+    public event Action<DrinkRefPayload>? ShowIngredientsRequested;
+    public event Action? CloseIngredientsRequested;
 
     public WsClient(Uri uri) => _uri = uri;
 
@@ -101,6 +104,15 @@ public sealed class WsClient
                     break;
                 case WsTypes.Navigate:
                     NavigateRequested?.Invoke(env.Id, env.Payload.Deserialize<NavigatePayload>(WsJson.Options)!);
+                    break;
+                case WsTypes.SelectDrink:
+                    SelectDrinkRequested?.Invoke(env.Id, env.Payload.Deserialize<DrinkRefPayload>(WsJson.Options)!);
+                    break;
+                case WsTypes.ShowIngredients:
+                    ShowIngredientsRequested?.Invoke(env.Payload.Deserialize<DrinkRefPayload>(WsJson.Options)!);
+                    break;
+                case WsTypes.CloseIngredients:
+                    CloseIngredientsRequested?.Invoke();
                     break;
                 default:
                     Debug.WriteLine($"[WS] Tipo desconocido, se ignora: {env.Type}");
