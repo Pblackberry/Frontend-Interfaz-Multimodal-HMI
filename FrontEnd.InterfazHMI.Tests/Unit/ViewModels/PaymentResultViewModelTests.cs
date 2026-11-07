@@ -7,8 +7,8 @@ namespace FrontEnd.InterfazHMI.Tests.Unit.ViewModels;
 
 public class PaymentResultViewModelTests
 {
-    private const string CheckGlyph = "";
-    private const string CrossGlyph = "";
+    private const string _checkGlyph = "";
+    private const string _crossGlyph = "";
 
     private readonly FakeNavigationService _nav = new();
     private readonly OrderSession _order = new();
@@ -30,7 +30,7 @@ public class PaymentResultViewModelTests
         var sut = CreateSut(PaymentOutcome.Approved);
 
         Assert.True(sut.IsSuccess);
-        Assert.Equal(CheckGlyph, sut.IconGlyph);
+        Assert.Equal(_checkGlyph, sut.IconGlyph);
         Assert.Equal("¡Pago realizado!", sut.Title);
         Assert.Equal("Estamos preparando tu bebida.", sut.Message);
         Assert.Equal("Nuevo pedido", sut.ButtonText);
@@ -42,7 +42,7 @@ public class PaymentResultViewModelTests
         var sut = CreateSut(PaymentOutcome.Rejected);
 
         Assert.False(sut.IsSuccess);
-        Assert.Equal(CrossGlyph, sut.IconGlyph);
+        Assert.Equal(_crossGlyph, sut.IconGlyph);
         Assert.Equal("Pago rechazado", sut.Title);
         Assert.Equal("No se realizó ningún cobro.", sut.Message);
         Assert.Equal("Volver al menú", sut.ButtonText);
@@ -54,7 +54,7 @@ public class PaymentResultViewModelTests
         var sut = CreateSut(PaymentOutcome.Expired);
 
         Assert.False(sut.IsSuccess);
-        Assert.Equal(CrossGlyph, sut.IconGlyph);
+        Assert.Equal(_crossGlyph, sut.IconGlyph);
         Assert.Equal("El código expiró", sut.Title);
         Assert.Equal("Genera uno nuevo desde el menú.", sut.Message);
         Assert.Equal("Volver al menú", sut.ButtonText);
@@ -66,7 +66,7 @@ public class PaymentResultViewModelTests
         var sut = CreateSut(PaymentOutcome.Error);
 
         Assert.False(sut.IsSuccess);
-        Assert.Equal(CrossGlyph, sut.IconGlyph);
+        Assert.Equal(_crossGlyph, sut.IconGlyph);
         Assert.Equal("No pudimos iniciar el pago", sut.Title);
         Assert.Equal("Inténtalo de nuevo.", sut.Message);
         Assert.Equal("Volver al menú", sut.ButtonText);
@@ -117,7 +117,7 @@ public class PaymentResultViewModelTests
         var sut = CreateSut();
 
         Assert.False(sut.IsSuccess);
-        Assert.Equal(CrossGlyph, sut.IconGlyph);
+        Assert.Equal(_crossGlyph, sut.IconGlyph);
         Assert.Equal("No pudimos iniciar el pago", sut.Title);
         Assert.Equal("Inténtalo de nuevo.", sut.Message);
         Assert.Equal("Volver al menú", sut.ButtonText);
