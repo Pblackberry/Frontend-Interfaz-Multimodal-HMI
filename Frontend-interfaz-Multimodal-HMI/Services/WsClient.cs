@@ -10,7 +10,7 @@ using Frontend_interfaz_Multimodal_HMI.Models;
 
 namespace Frontend_interfaz_Multimodal_HMI.Services;
 
-public sealed class WsClient
+public sealed class WsClient : IWsSender
 {
     private readonly Uri _uri;
     private readonly SemaphoreSlim _sendLock = new(1, 1);
@@ -22,6 +22,8 @@ public sealed class WsClient
     public event Action<string, DrinkRefPayload>? SelectDrinkRequested;
     public event Action<DrinkRefPayload>? ShowIngredientsRequested;
     public event Action? CloseIngredientsRequested;
+    public event Action<PaymentStartedPayload>? PaymentStarted;
+    public event Action<string, PaymentResultPayload>? PaymentResultReceived;
 
     public WsClient(Uri uri) => _uri = uri;
 
@@ -113,6 +115,12 @@ public sealed class WsClient
                     break;
                 case WsTypes.CloseIngredients:
                     CloseIngredientsRequested?.Invoke();
+                    break;
+                case WsTypes.PaymentStarted:
+                    PaymentStarted?.Invoke(env.Payload.Deserialize<PaymentStartedPayload>(WsJson.Options)!);
+                    break;
+                case WsTypes.PaymentResult:
+                    PaymentResultReceived?.Invoke(env.Id, env.Payload.Deserialize<PaymentResultPayload>(WsJson.Options)!);
                     break;
                 default:
                     Debug.WriteLine($"[WS] Tipo desconocido, se ignora: {env.Type}");

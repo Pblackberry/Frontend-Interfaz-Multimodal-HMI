@@ -15,6 +15,7 @@ public partial class NavigationService : ObservableObject, INavigationService
         [Screen.Welcome] = typeof(WelcomeViewModel),
         [Screen.Menu] = typeof(MenuViewModel),
         [Screen.Payment] = typeof(PaymentViewModel),
+        [Screen.PaymentResult] = typeof(PaymentResultViewModel),
     };
 
     private readonly IServiceProvider _sp;

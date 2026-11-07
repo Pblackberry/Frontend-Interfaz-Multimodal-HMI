@@ -16,6 +16,7 @@ public class WsStateModelsTests
     private static string[] PropertyNames(JsonElement element)
         => element.EnumerateObject().Select(p => p.Name).ToArray();
 
+    // ---------- WsTypes ----------
 
     [Fact]
     public void WsTypes_State_MatchesTheBackendTypeName()
@@ -23,10 +24,13 @@ public class WsStateModelsTests
         Assert.Equal("state", WsTypes.State);
     }
 
+    // ---------- Screen ----------
 
     [Theory]
     [InlineData(Screen.Welcome, "welcome")]
     [InlineData(Screen.Menu, "menu")]
+    [InlineData(Screen.Payment, "payment")]
+    [InlineData(Screen.PaymentResult, "payment_result")]
     public void Screen_IsWrittenInLowerCase(Screen screen, string expected)
     {
         Assert.Equal("\"" + expected + "\"", Serialize(screen));
@@ -35,6 +39,8 @@ public class WsStateModelsTests
     [Theory]
     [InlineData("welcome", Screen.Welcome)]
     [InlineData("menu", Screen.Menu)]
+    [InlineData("payment", Screen.Payment)]
+    [InlineData("payment_result", Screen.PaymentResult)]
     public void Screen_IsReadFromLowerCase(string text, Screen expected)
     {
         Assert.Equal(expected, JsonSerializer.Deserialize<Screen>("\"" + text + "\"", WsJson.Options));
@@ -43,20 +49,24 @@ public class WsStateModelsTests
     [Fact]
     public void Screen_HasExactlyTheScreensTheBackendKnows()
     {
-        var names = Enum.GetNames<Screen>().Select(n => n.ToLowerInvariant()).OrderBy(n => n);
+        var names = Enum.GetNames<Screen>()
+            .Select(n => JsonNamingPolicy.SnakeCaseLower.ConvertName(n))
+            .OrderBy(n => n, StringComparer.Ordinal);
 
-        Assert.Equal(new[] { "menu", "payment", "welcome" }, names);
+        Assert.Equal(new[] { "menu", "payment", "payment_result", "welcome" }, names);
     }
 
     [Theory]
     [InlineData("welome")]
     [InlineData("otra")]
+    [InlineData("payment-result")]
     public void Screen_UnknownName_IsRejected(string text)
     {
         Assert.Throws<JsonException>(
             () => JsonSerializer.Deserialize<Screen>("\"" + text + "\"", WsJson.Options));
     }
 
+    // ---------- StateSource ----------
 
     [Theory]
     [InlineData(StateSource.Touch, "touch")]
@@ -75,6 +85,7 @@ public class WsStateModelsTests
         Assert.Equal(new[] { "backend", "init", "touch" }, names);
     }
 
+    // ---------- StatePayload ----------
 
     [Fact]
     public void StatePayload_RefIsNullByDefault()
@@ -119,6 +130,7 @@ public class WsStateModelsTests
             new StatePayload(Screen.Menu, StateSource.Init));
     }
 
+    // ---------- WsEnvelope<T> ----------
 
     [Fact]
     public void Envelope_GeneratesA32CharacterHexId()

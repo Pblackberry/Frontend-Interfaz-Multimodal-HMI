@@ -30,6 +30,9 @@ public partial class App : Application
         sc.AddSingleton<BackendLink>();
         sc.AddSingleton<OrderSession>();
         sc.AddTransient<PaymentViewModel>();
+        sc.AddSingleton<IWsSender>(sp => sp.GetRequiredService<WsClient>());
+        sc.AddSingleton<IQrFactory, QrFactory>();
+        sc.AddTransient<PaymentResultViewModel>();
         sc.AddSingleton<IImageLoader>(_ =>
         {
             var http = new HttpClient { Timeout = TimeSpan.FromSeconds(10) };

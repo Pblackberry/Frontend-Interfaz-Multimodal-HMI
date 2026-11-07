@@ -23,6 +23,10 @@ public sealed class BackendLink
             WeakReferenceMessenger.Default.Send(new VoiceShowIngredientsMessage(p.Name)));
         _ws.CloseIngredientsRequested += () => _onUi(() =>
             WeakReferenceMessenger.Default.Send(new VoiceCloseIngredientsMessage()));
+        _ws.PaymentStarted += p => _onUi(() =>
+            WeakReferenceMessenger.Default.Send(new PaymentStartedMessage(p)));
+        _ws.PaymentResultReceived += (id, p) => _onUi(() =>
+            WeakReferenceMessenger.Default.Send(new PaymentResultMessage(id, p)));
     }
 
     private void OnNavigated(Screen screen, StateSource source, string? orderId)
