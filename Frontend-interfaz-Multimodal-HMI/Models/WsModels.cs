@@ -24,9 +24,13 @@ public static class WsTypes
     public const string SelectDrink = "select_drink";
     public const string ShowIngredients = "show_ingredients";
     public const string CloseIngredients = "close_ingredients";
+    public const string StartPayment = "start_payment";
+    public const string CancelPayment = "cancel_payment";
+    public const string PaymentStarted = "payment_started";
+    public const string PaymentResult = "payment_result";
 }
 
-public enum Screen { Welcome, Menu, Payment }
+public enum Screen { Welcome, Menu, Payment, PaymentResult }
 public enum StateSource { Touch, Backend, Init }
 
 
@@ -49,3 +53,10 @@ public sealed class WsEnvelope
 }
 
 public sealed record NavigatePayload(Screen Screen);
+
+public enum PaymentOutcome { Approved, Rejected, Expired, Error }
+
+public sealed record StartPaymentPayload(string Drink);
+public sealed record CancelPaymentPayload(string? PaymentId);
+public sealed record PaymentStartedPayload(string PaymentId, string PayUrl, string DrinkName, decimal Price);
+public sealed record PaymentResultPayload(string? PaymentId, PaymentOutcome Status, string? Reason);
