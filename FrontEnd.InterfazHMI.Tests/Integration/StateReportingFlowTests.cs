@@ -138,8 +138,29 @@ public class StateReportingFlowTests
         Assert.Equal(Screen.Welcome, main.Navigation.CurrentScreen);
     }
 
+    // ---------- conexión ----------
+
     [Fact]
-    public async Task WhileDisconnected_NavigationStillWorksButNothingIsSentOrQueued()
+    public async Task OnConnecting_TheCurrentScreenIsReportedAsInit()
+    {
+        await using var server = new FakeWsServer();
+        using var provider = BuildProvider();
+        var main = provider.GetRequiredService<MainViewModel>();
+        var nav = provider.GetRequiredService<INavigationService>();
+        BackendLink? link = null;
+
+        await using var session = await WsClientSession.StartAsync(server, beforeRun: client =>
+        {
+            link = new BackendLink(client, nav);
+        });
+
+        Assert.NotNull(link);
+        Assert.Equal(Screen.Welcome, main.Navigation.CurrentScreen);
+        Assert.Equal(("welcome", "init", (string?)null), await NextStateAsync(session));
+    }
+
+    [Fact]
+    public async Task WhileDisconnected_NavigationStillWorks_AndOnConnectingOnlyTheCurrentScreenIsReportedAsInit()
     {
         await using var server = new FakeWsServer();
         using var provider = BuildProvider();
@@ -152,10 +173,13 @@ public class StateReportingFlowTests
             link = new BackendLink(client, nav);
             nav.NavigateTo("menu");
         });
-        var message = await FakeWsServer.TryReceiveTextAsync(session.ServerSocket, _noMessageWait);
+        var first = await NextStateAsync(session);
+        var extra = await FakeWsServer.TryReceiveTextAsync(session.ServerSocket, _noMessageWait);
 
         Assert.NotNull(link);
         Assert.IsType<MenuViewModel>(main.Navigation.Current);
-        Assert.Null(message);
+        // Lo navegado sin conexión no se encola: solo llega el estado actual como "init".
+        Assert.Equal(("menu", "init", (string?)null), first);
+        Assert.Null(extra);
     }
 }

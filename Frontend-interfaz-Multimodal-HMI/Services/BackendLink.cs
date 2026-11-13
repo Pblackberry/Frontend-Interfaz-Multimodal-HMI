@@ -8,7 +8,18 @@ public sealed class BackendLink
 {
     private readonly WsClient _ws;
     private readonly INavigationService _nav;
-    private static void _onUi(Action action) => Application.Current?.Dispatcher.InvokeAsync(action);
+
+    private static void _onUi(Action action)
+    {
+        var dispatcher = Application.Current?.Dispatcher;
+        if (dispatcher is null)
+        {
+            action();
+            return;
+        }
+
+        dispatcher.InvokeAsync(action);
+    }
 
     public BackendLink(WsClient ws, INavigationService nav)
     {
@@ -27,17 +38,18 @@ public sealed class BackendLink
             WeakReferenceMessenger.Default.Send(new PaymentStartedMessage(p)));
         _ws.PaymentResultReceived += (id, p) => _onUi(() =>
             WeakReferenceMessenger.Default.Send(new PaymentResultMessage(id, p)));
+        _ws.CobotStatusReceived += p => _onUi(() =>
+            WeakReferenceMessenger.Default.Send(new CobotStatusMessage(p)));
     }
 
     private void OnNavigated(Screen screen, StateSource source, string? orderId)
         => _ = _ws.SendAsync(WsTypes.State, new StatePayload(screen, source, orderId));
 
     private void OnNavigateRequested(string id, NavigatePayload payload)
-    => Application.Current?.Dispatcher.InvokeAsync(
-        () => _nav.NavigateTo(payload.Screen, StateSource.Backend, id));
+        => _onUi(() => _nav.NavigateTo(payload.Screen, StateSource.Backend, id));
 
     private void OnConnected()
-        => Application.Current?.Dispatcher.InvokeAsync(() =>
+        => _onUi(() =>
         {
             if (_nav.CurrentScreen is { } screen)
             {

@@ -24,6 +24,7 @@ public sealed class WsClient : IWsSender
     public event Action? CloseIngredientsRequested;
     public event Action<PaymentStartedPayload>? PaymentStarted;
     public event Action<string, PaymentResultPayload>? PaymentResultReceived;
+    public event Action<CobotStatusPayload>? CobotStatusReceived;
 
     public WsClient(Uri uri) => _uri = uri;
 
@@ -121,6 +122,9 @@ public sealed class WsClient : IWsSender
                     break;
                 case WsTypes.PaymentResult:
                     PaymentResultReceived?.Invoke(env.Id, env.Payload.Deserialize<PaymentResultPayload>(WsJson.Options)!);
+                    break;
+                case WsTypes.CobotStatus:
+                    CobotStatusReceived?.Invoke(env.Payload.Deserialize<CobotStatusPayload>(WsJson.Options)!);
                     break;
                 default:
                     Debug.WriteLine($"[WS] Tipo desconocido, se ignora: {env.Type}");

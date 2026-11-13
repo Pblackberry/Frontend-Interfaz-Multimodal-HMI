@@ -1,3 +1,5 @@
+using System.Globalization;
+using CommunityToolkit.Mvvm.Messaging;
 using FrontEnd.InterfazHMI.Tests.Support;
 using Frontend_interfaz_Multimodal_HMI.Models;
 using Frontend_interfaz_Multimodal_HMI.Services;
@@ -5,22 +7,31 @@ using Frontend_interfaz_Multimodal_HMI.ViewModels;
 
 namespace FrontEnd.InterfazHMI.Tests.Unit.ViewModels;
 
-public class PaymentResultViewModelTests
+[Collection(MessengerCollection.Name)]
+public class PaymentResultViewModelTests : IDisposable
 {
-    private const string _checkGlyph = "";
-    private const string _crossGlyph = "";
+    private const string _checkGlyph = "\uE73E";
+    private const string _crossGlyph = "\uE711";
 
     private readonly FakeNavigationService _nav = new();
     private readonly OrderSession _order = new();
 
-    private PaymentResultViewModel CreateSut(PaymentOutcome? outcome = null, string? reason = null)
+    public PaymentResultViewModelTests() => WeakReferenceMessenger.Default.Reset();
+
+    public void Dispose() => WeakReferenceMessenger.Default.Reset();
+
+    private PaymentResultViewModel CreateSut(
+        PaymentOutcome? outcome = null, string? reason = null, TimeSpan? readyDelay = null)
     {
         if (outcome is { } status)
         {
             _order.SetResult(new PaymentResultPayload("pago-1", status, reason));
         }
-        return new PaymentResultViewModel(_nav, _order);
+        return new PaymentResultViewModel(_nav, _order, readyDelay);
     }
+
+    private static CobotStatusMessage Cobot(int codigo)
+        => new(new CobotStatusPayload(codigo, "info", "evento " + codigo));
 
     // ---------- textos según el resultado ----------
 
@@ -135,6 +146,24 @@ public class PaymentResultViewModelTests
     }
 
     [Fact]
+    public void IsFailure_IsTheOppositeOfIsSuccess_ForEveryOutcome()
+    {
+        foreach (var outcome in Enum.GetValues<PaymentOutcome>())
+        {
+            var sut = new PaymentResultViewModel(_nav, ResultOf(outcome));
+
+            Assert.Equal(!sut.IsSuccess, sut.IsFailure);
+            Assert.Equal(outcome != PaymentOutcome.Approved, sut.IsFailure);
+        }
+    }
+
+    [Fact]
+    public void WithoutAResult_IsAFailure()
+    {
+        Assert.True(CreateSut().IsFailure);
+    }
+
+    [Fact]
     public void EveryOutcome_HasATitleAMessageAndAButton()
     {
         foreach (var outcome in Enum.GetValues<PaymentOutcome>())
@@ -157,6 +186,215 @@ public class PaymentResultViewModelTests
 
         Assert.True(sut.IsSuccess);
         Assert.Equal("¡Pago realizado!", sut.Title);
+    }
+
+    // ---------- bebida y precio ----------
+
+    [Fact]
+    public void WithASelectedDrink_ShowsItsNameAndThePriceWithTwoDecimals()
+    {
+        var item = TestData.Item("Mojito");
+        _order.Select(item);
+
+        var sut = CreateSut(PaymentOutcome.Approved);
+
+        Assert.Equal(item.NombreItem, sut.DrinkName);
+        Assert.Equal(item.PrecioItem.ToString("0.00", CultureInfo.InvariantCulture), sut.PriceText);
+        Assert.DoesNotContain(",", sut.PriceText);
+    }
+
+    [Fact]
+    public void WithoutASelectedDrink_NameAndPriceAreEmpty()
+    {
+        var sut = CreateSut(PaymentOutcome.Approved);
+
+        Assert.Equal("", sut.DrinkName);
+        Assert.Equal("", sut.PriceText);
+    }
+
+    [Fact]
+    public void DrinkAndPrice_AreTakenWhenCreated_NotUpdatedLater()
+    {
+        var item = TestData.Item("Mojito");
+        _order.Select(item);
+        var sut = CreateSut(PaymentOutcome.Approved);
+
+        _order.Clear();
+
+        Assert.Equal(item.NombreItem, sut.DrinkName);
+        Assert.NotEqual("", sut.PriceText);
+    }
+
+    // ---------- fases del pedido ----------
+
+    [Fact]
+    public void Phase_StartsAsPaid()
+    {
+        var sut = CreateSut(PaymentOutcome.Approved);
+
+        Assert.Equal(OrderPhase.Paid, sut.Phase);
+        Assert.False(sut.IsPreparing);
+        Assert.False(sut.IsReady);
+    }
+
+    [Fact]
+    public void CobotCode102_MovesAnApprovedOrderToPreparing()
+    {
+        var sut = CreateSut(PaymentOutcome.Approved);
+
+        sut.Receive(Cobot(102));
+
+        Assert.Equal(OrderPhase.Preparing, sut.Phase);
+        Assert.True(sut.IsPreparing);
+        Assert.False(sut.IsReady);
+    }
+
+    [Fact]
+    public void ChangingThePhase_NotifiesIsPreparingAndIsReady()
+    {
+        var sut = CreateSut(PaymentOutcome.Approved);
+        var changed = new List<string?>();
+        sut.PropertyChanged += (_, e) => changed.Add(e.PropertyName);
+
+        sut.Receive(Cobot(102));
+
+        Assert.Contains(nameof(PaymentResultViewModel.Phase), changed);
+        Assert.Contains(nameof(PaymentResultViewModel.IsPreparing), changed);
+        Assert.Contains(nameof(PaymentResultViewModel.IsReady), changed);
+    }
+
+    [Fact]
+    public void CobotCode200_ShowsTheReadyScreenRightAway()
+    {
+        var sut = CreateSut(PaymentOutcome.Approved, readyDelay: TimeSpan.FromMinutes(5));
+
+        sut.Receive(Cobot(200));
+
+        Assert.Equal(OrderPhase.Ready, sut.Phase);
+        Assert.True(sut.IsReady);
+        Assert.False(sut.IsPreparing);
+    }
+
+    [Fact]
+    public void CobotCode200_KeepsTheOrderUntilTheReadyScreenTimeIsOver()
+    {
+        _order.Select(TestData.Item("Mojito"));
+        var sut = CreateSut(PaymentOutcome.Approved, readyDelay: TimeSpan.FromMinutes(5));
+
+        sut.Receive(Cobot(200));
+
+        Assert.Empty(_nav.NavigateToCalls);
+        Assert.NotNull(_order.SelectedDrink);
+        Assert.NotNull(_order.Result);
+    }
+
+    [Fact]
+    public void CobotCode200_AfterTheReadyScreenTime_ClearsTheOrderAndGoesToTheWelcomeScreen()
+    {
+        _order.Select(TestData.Item("Mojito"));
+        var sut = CreateSut(PaymentOutcome.Approved, readyDelay: TimeSpan.Zero);
+
+        sut.Receive(Cobot(200));
+
+        Assert.Equal(new[] { (Screen.Welcome, StateSource.Touch, (string?)null) }, _nav.NavigateToCalls);
+        Assert.Null(_order.SelectedDrink);
+        Assert.Null(_order.Result);
+        Assert.Equal(OrderPhase.Ready, sut.Phase);
+    }
+
+    [Fact]
+    public async Task CobotCode200_IfTheViewModelWasDeactivatedMeanwhile_DoesNotNavigate()
+    {
+        _order.Select(TestData.Item("Mojito"));
+        var sut = CreateSut(PaymentOutcome.Approved, readyDelay: TimeSpan.FromMilliseconds(150));
+
+        sut.Receive(Cobot(200));
+        sut.IsActive = false;
+        await Task.Delay(600);
+
+        Assert.Empty(_nav.NavigateToCalls);
+        Assert.NotNull(_order.SelectedDrink);
+    }
+
+    [Fact]
+    public void ThePreparingAndReadyCodes_InOrder_ReachTheFinalPhase()
+    {
+        var sut = CreateSut(PaymentOutcome.Approved, readyDelay: TimeSpan.FromMinutes(5));
+
+        sut.Receive(Cobot(102));
+        Assert.Equal(OrderPhase.Preparing, sut.Phase);
+
+        sut.Receive(Cobot(200));
+        Assert.Equal(OrderPhase.Ready, sut.Phase);
+    }
+
+    [Theory]
+    [InlineData(0)]
+    [InlineData(101)]
+    [InlineData(103)]
+    [InlineData(999)]
+    public void AnyOtherCobotCode_DoesNotChangeThePhaseOrNavigate(int codigo)
+    {
+        var sut = CreateSut(PaymentOutcome.Approved, readyDelay: TimeSpan.Zero);
+
+        sut.Receive(Cobot(codigo));
+
+        Assert.Equal(OrderPhase.Paid, sut.Phase);
+        Assert.Empty(_nav.NavigateToCalls);
+    }
+
+    [Theory]
+    [InlineData(PaymentOutcome.Rejected, 102)]
+    [InlineData(PaymentOutcome.Rejected, 200)]
+    [InlineData(PaymentOutcome.Expired, 102)]
+    [InlineData(PaymentOutcome.Expired, 200)]
+    [InlineData(PaymentOutcome.Error, 102)]
+    [InlineData(PaymentOutcome.Error, 200)]
+    public void CobotMessages_AreIgnoredWhenThePaymentFailed(PaymentOutcome outcome, int codigo)
+    {
+        _order.Select(TestData.Item("Mojito"));
+        var sut = CreateSut(outcome, readyDelay: TimeSpan.Zero);
+
+        sut.Receive(Cobot(codigo));
+
+        Assert.Equal(OrderPhase.Paid, sut.Phase);
+        Assert.Empty(_nav.NavigateToCalls);
+        Assert.NotNull(_order.SelectedDrink);
+    }
+
+    [Fact]
+    public void WithoutAResult_CobotMessagesAreIgnored()
+    {
+        var sut = CreateSut(readyDelay: TimeSpan.Zero);
+
+        sut.Receive(Cobot(102));
+        sut.Receive(Cobot(200));
+
+        Assert.Equal(OrderPhase.Paid, sut.Phase);
+        Assert.Empty(_nav.NavigateToCalls);
+    }
+
+    // ---------- mensajes por el messenger ----------
+
+    [Fact]
+    public void ItReceivesTheCobotStatusMessages_SentThroughTheMessenger()
+    {
+        var sut = CreateSut(PaymentOutcome.Approved);
+
+        WeakReferenceMessenger.Default.Send(Cobot(102));
+
+        Assert.Equal(OrderPhase.Preparing, sut.Phase);
+    }
+
+    [Fact]
+    public void AfterBeingDeactivated_ItNoLongerReceivesCobotStatusMessages()
+    {
+        var sut = CreateSut(PaymentOutcome.Approved);
+        sut.IsActive = false;
+
+        WeakReferenceMessenger.Default.Send(Cobot(102));
+
+        Assert.Equal(OrderPhase.Paid, sut.Phase);
     }
 
     // ---------- botón ----------

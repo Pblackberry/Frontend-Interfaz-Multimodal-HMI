@@ -28,6 +28,7 @@ public static class WsTypes
     public const string CancelPayment = "cancel_payment";
     public const string PaymentStarted = "payment_started";
     public const string PaymentResult = "payment_result";
+    public const string CobotStatus = "cobot_status";
 }
 
 public enum Screen { Welcome, Menu, Payment, PaymentResult }
@@ -60,3 +61,4 @@ public sealed record StartPaymentPayload(string Drink);
 public sealed record CancelPaymentPayload(string? PaymentId);
 public sealed record PaymentStartedPayload(string PaymentId, string PayUrl, string DrinkName, decimal Price);
 public sealed record PaymentResultPayload(string? PaymentId, PaymentOutcome Status, string? Reason);
+public sealed record CobotStatusPayload(int Codigo, string TipoEvento, string Descripcion);
