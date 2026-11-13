@@ -1,3 +1,4 @@
+using System.Reflection;
 using System.Text.Json;
 using Frontend_interfaz_Multimodal_HMI.Models;
 
@@ -43,12 +44,36 @@ public class WsModelsTests
         public Modo Modo { get; set; }
     }
 
+    private sealed record Ping(string Mensaje);
+
     // ---------- WsTypes ----------
 
-    [Fact]
-    public void WsTypes_CatalogUpdate_MatchesBackendTypeName()
+    [Theory]
+    [InlineData(WsTypes.CatalogUpdate, "catalog_update")]
+    [InlineData(WsTypes.State, "state")]
+    [InlineData(WsTypes.Navigate, "navigate")]
+    [InlineData(WsTypes.SelectDrink, "select_drink")]
+    [InlineData(WsTypes.ShowIngredients, "show_ingredients")]
+    [InlineData(WsTypes.CloseIngredients, "close_ingredients")]
+    [InlineData(WsTypes.StartPayment, "start_payment")]
+    [InlineData(WsTypes.CancelPayment, "cancel_payment")]
+    [InlineData(WsTypes.PaymentStarted, "payment_started")]
+    [InlineData(WsTypes.PaymentResult, "payment_result")]
+    [InlineData(WsTypes.CobotStatus, "cobot_status")]
+    public void WsTypes_Constants_MatchBackendTypeNames(string actual, string esperado)
     {
-        Assert.Equal("catalog_update", WsTypes.CatalogUpdate);
+        Assert.Equal(esperado, actual);
+    }
+
+    [Fact]
+    public void WsTypes_Constants_AreUnique()
+    {
+        var valores = typeof(WsTypes)
+            .GetFields(BindingFlags.Public | BindingFlags.Static)
+            .Select(f => (string)f.GetRawConstantValue()!)
+            .ToList();
+
+        Assert.Equal(valores.Count, valores.Distinct().Count());
     }
 
     // ---------- WsJson.Options ----------
@@ -216,5 +241,104 @@ public class WsModelsTests
         Assert.Equal(original.Ts, roundTrip.Ts);
         Assert.Equal(original.Type, roundTrip.Type);
         Assert.Equal(original.Payload.GetRawText(), roundTrip.Payload.GetRawText());
+    }
+
+    // ---------- WsEnvelope<T> ----------
+
+    [Fact]
+    public void GenericEnvelope_Defaults_GenerateIdAndTimestamp()
+    {
+        var antes = DateTimeOffset.UtcNow;
+
+        var envelope = new WsEnvelope<Ping> { Type = "ping", Payload = new Ping("hola") };
+
+        Assert.Equal(32, envelope.Id.Length);   // Guid "N": 32 caracteres, sin guiones
+        Assert.DoesNotContain("-", envelope.Id);
+        Assert.InRange(envelope.Ts, antes, DateTimeOffset.UtcNow);
+        Assert.Equal(TimeSpan.Zero, envelope.Ts.Offset);
+    }
+
+    [Fact]
+    public void GenericEnvelope_EachInstance_GetsADifferentId()
+    {
+        var a = new WsEnvelope<Ping> { Type = "ping", Payload = new Ping("a") };
+        var b = new WsEnvelope<Ping> { Type = "ping", Payload = new Ping("b") };
+
+        Assert.NotEqual(a.Id, b.Id);
+    }
+
+    [Fact]
+    public void GenericEnvelope_Serialize_UsesSnakeCaseAndNestsPayload()
+    {
+        var envelope = new WsEnvelope<Ping>
+        {
+            Id = "abc",
+            Ts = new DateTimeOffset(2026, 10, 22, 10, 0, 0, TimeSpan.Zero),
+            Type = "ping",
+            Payload = new Ping("hola"),
+        };
+
+        var json = JsonSerializer.Serialize(envelope, WsJson.Options);
+
+        Assert.Contains("\"id\":\"abc\"", json);
+        Assert.Contains("\"type\":\"ping\"", json);
+        Assert.Contains("\"payload\":{\"mensaje\":\"hola\"}", json);
+    }
+
+    [Fact]
+    public void GenericEnvelope_RoundTrip_KeepsAllFields()
+    {
+        var original = new WsEnvelope<Ping>
+        {
+            Id = "abc",
+            Ts = new DateTimeOffset(2026, 10, 22, 10, 0, 0, TimeSpan.Zero),
+            Type = "ping",
+            Payload = new Ping("hola"),
+        };
+
+        var json = JsonSerializer.Serialize(original, WsJson.Options);
+        var copia = JsonSerializer.Deserialize<WsEnvelope<Ping>>(json, WsJson.Options)!;
+
+        Assert.Equal(original.Id, copia.Id);
+        Assert.Equal(original.Ts, copia.Ts);
+        Assert.Equal(original.Type, copia.Type);
+        Assert.Equal(original.Payload, copia.Payload);
+    }
+
+    // ---------- Enums ----------
+
+    [Theory]
+    [InlineData(Screen.Welcome, "welcome")]
+    [InlineData(Screen.Menu, "menu")]
+    [InlineData(Screen.Payment, "payment")]
+    [InlineData(Screen.PaymentResult, "payment_result")]
+    public void Screen_Serializes_AsSnakeCaseString(Screen screen, string esperado)
+    {
+        var json = JsonSerializer.Serialize(screen, WsJson.Options);
+
+        Assert.Equal($"\"{esperado}\"", json);
+    }
+
+    [Theory]
+    [InlineData(PaymentOutcome.Approved, "approved")]
+    [InlineData(PaymentOutcome.Rejected, "rejected")]
+    [InlineData(PaymentOutcome.Expired, "expired")]
+    [InlineData(PaymentOutcome.Error, "error")]
+    public void PaymentOutcome_RoundTrips_AsSnakeCaseString(PaymentOutcome outcome, string esperado)
+    {
+        var json = JsonSerializer.Serialize(outcome, WsJson.Options);
+        var back = JsonSerializer.Deserialize<PaymentOutcome>(json, WsJson.Options);
+
+        Assert.Equal($"\"{esperado}\"", json);
+        Assert.Equal(outcome, back);
+    }
+
+    [Theory]
+    [InlineData(StateSource.Touch, "touch")]
+    [InlineData(StateSource.Backend, "backend")]
+    [InlineData(StateSource.Init, "init")]
+    public void StateSource_Serializes_AsSnakeCaseString(StateSource source, string esperado)
+    {
+        Assert.Equal($"\"{esperado}\"", JsonSerializer.Serialize(source, WsJson.Options));
     }
 }

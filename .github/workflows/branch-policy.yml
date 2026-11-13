@@ -21,7 +21,7 @@ jobs:
             echo "::error::A main solo se llega desde develop (rama origen: $HEAD)."
             exit 1
           fi
-          if [ "$BASE" = "develop" ] && ! [[ "$HEAD" =~ ^(feat|fix|chore|docs|refactor)/ ]]; then
+          if [ "$BASE" = "develop" ] && ! [[ "$HEAD" =~ ^(feature|feat|fix|chore|docs|refactor)/ ]]; then
             echo "::error::Las ramas hacia develop deben llamarse feat/*, fix/*, chore/*, docs/* o refactor/* (rama origen: $HEAD)."
             exit 1
           fi
